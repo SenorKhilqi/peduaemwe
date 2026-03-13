@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Onboarding - Web Ledger SAK EMKM</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .gradient-hero {
+            background: linear-gradient(135deg, #0EA5E9 0%, #06B6D4 100%);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(6, 182, 212, 0.15);
+        }
+        .card-selected {
+            border: 3px solid #06B6D4;
+            background: rgba(6, 182, 212, 0.05);
+        }
+        .step-indicator {
+            counter-increment: step-counter;
+        }
+        .step-number {
+            @apply w-10 h-10 bg-gradient-to-br from-cyan-400 to-blue-500 text-white rounded-full flex items-center justify-center font-bold;
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <!-- NAVBAR -->
+    <nav class="bg-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center gap-2">
+                    <div class="w-10 h-10 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-lg">₽</span>
+                    </div>
+                    <span class="font-bold text-xl text-gray-900">Web Ledger</span>
+                </div>
+                <div class="flex items-center gap-4">
+                    <a href="index.html" class="text-gray-700 hover:text-cyan-500 transition">Kembali</a>
+                    <a href="dashboard.html" class="px-6 py-2 rounded-lg bg-gradient-to-r from-cyan-400 to-blue-500 text-white font-semibold hover:shadow-lg transition">
+                        Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- STEP PROGRESS -->
+    <div class="bg-gradient-to-r from-cyan-50 to-blue-50 px-4 py-8">
+        <div class="max-w-4xl mx-auto">
+            <div class="flex items-center justify-between">
+                <!-- Step 1: Pilih Tipe UMKM (Active) -->
+                <div class="flex flex-col items-center flex-1">
+                    <div class="step-number bg-gradient-to-br from-cyan-400 to-blue-500">1</div>
+                    <p class="text-sm font-semibold text-gray-900 mt-2">Tipe UMKM</p>
+                </div>
+
+                <!-- Connector Line -->
+                <div class="flex-1 h-1 bg-gray-300 mx-2 mt-5"></div>
+
+                <!-- Step 2: Data Bisnis -->
+                <div class="flex flex-col items-center flex-1">
+                    <div class="step-number bg-gray-300 text-gray-600">2</div>
+                    <p class="text-sm font-semibold text-gray-600 mt-2">Data Bisnis</p>
+                </div>
+
+                <!-- Connector Line -->
+                <div class="flex-1 h-1 bg-gray-300 mx-2 mt-5"></div>
+
+                <!-- Step 3: Selesai -->
+                <div class="flex flex-col items-center flex-1">
+                    <div class="step-number bg-gray-300 text-gray-600">3</div>
+                    <p class="text-sm font-semibold text-gray-600 mt-2">Selesai</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <main class="max-w-5xl mx-auto px-4 py-12">
+        <!-- Section: Pilih Tipe UMKM -->
+        <div class="mb-16">
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">Pilih Tipe Bisnis Anda</h1>
+            <p class="text-xl text-gray-600 mb-12">Kami akan menyesuaikan fitur dan kategori transaksi sesuai dengan jenis bisnis Anda</p>
+
+            <!-- UMKM Type Cards -->
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Card 1: Jasa -->
+                <div class="card-hover bg-white rounded-2xl shadow-lg p-8 border-2 border-transparent cursor-pointer umkm-card" data-type="jasa">
+                    <div class="mb-6">
+                        <div class="w-16 h-16 bg-gradient-to-br from-cyan-100 to-blue-100 rounded-xl flex items-center justify-center text-cyan-600 mb-4">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900">Jasa</h3>
+                        <p class="text-gray-600 mt-2">Konsultan, Akuntan, Desainer, dll</p>
+                    </div>
+                    <ul class="space-y-2 text-sm text-gray-600 mb-6">
+                        <li class="flex items-center gap-2">
+                            <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            Tracking jam kerja
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            Invoice berulang
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            Client management
+                        </li>
+                    </ul>
+                    <button class="w-full px-4 py-3 bg-cyan-50 text-cyan-600 font-bold rounded-lg border-2 border-cyan-200 hover:bg-cyan-100 transition select-btn">
+                        Pilih Tipe Ini
+                    </button>
+                </div>
+
+                <!-- Card 2: Dagang -->
+                <div class="card-hover bg-white rounded-2xl shadow-lg p-8 border-2 border-transparent cursor-pointer umkm-card" data-type="dagang">
+                    <div class="mb-6">
+                        <div class="w-16 h-16 bg-gradient-to-br from-green-100 to-emerald-100 rounded-xl flex items-center justify-center text-green-600 mb-4">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900">Dagang</h3>
+                        <p class="text-gray-600 mt-2">Toko retail, Warung, Marketplace</p>
+                    </div>
+                    <ul class="space-y-2 text-sm text-gray-600 mb-6">
+                        <li class="flex items-center gap-2">
+                            <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            Manajemen stok
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            POS Integration
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            Laporan penjualan
+                        </li>
+                    </ul>
+                    <button class="w-full px-4 py-3 bg-gray-50 text-gray-600 font-bold rounded-lg border-2 border-gray-200 hover:bg-gray-100 transition select-btn">
+                        Pilih Tipe Ini
+                    </button>
+                </div>
+
+                <!-- Card 3: Manufaktur -->
+                <div class="card-hover bg-white rounded-2xl shadow-lg p-8 border-2 border-transparent cursor-pointer umkm-card" data-type="manufaktur">
+                    <div class="mb-6">
+                        <div class="w-16 h-16 bg-gradient-to-br from-orange-100 to-red-100 rounded-xl flex items-center justify-center text-orange-600 mb-4">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-5.011.25c-.86.369-1.653.842-2.428 1.379M19 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900">Manufaktur</h3>
+                        <p class="text-gray-600 mt-2">Produksi, Kerajinan, Industri Kecil</p>
+                    </div>
+                    <ul class="space-y-2 text-sm text-gray-600 mb-6">
+                        <li class="flex items-center gap-2">
+                            <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            Biaya produksi
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            Material tracking
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            Efisiensi produksi
+                        </li>
+                    </ul>
+                    <button class="w-full px-4 py-3 bg-gray-50 text-gray-600 font-bold rounded-lg border-2 border-gray-200 hover:bg-gray-100 transition select-btn">
+                        Pilih Tipe Ini
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Call to Action -->
+        <div class="bg-gradient-to-r from-cyan-50 to-blue-50 rounded-2xl p-8 text-center">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">Belum tahu mau pilih tipe mana?</h2>
+            <p class="text-gray-600 mb-6">Anda bisa mengubahnya kapan saja di pengaturan akun setelah proses onboarding.</p>
+            <button class="px-6 py-3 bg-gradient-to-r from-cyan-400 to-blue-500 text-white font-bold rounded-lg hover:shadow-lg transition" onclick="skipOnboarding()">
+                Lewati untuk Sekarang
+            </button>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="flex justify-center gap-4 mt-12">
+            <a href="index.html" class="px-6 py-3 border-2 border-gray-300 text-gray-700 font-bold rounded-lg hover:bg-gray-50 transition">
+                ← Kembali
+            </a>
+            <button class="px-6 py-3 bg-gradient-to-r from-cyan-400 to-blue-500 text-white font-bold rounded-lg hover:shadow-lg transition" id="nextBtn" onclick="goToNextStep()" disabled>
+                Lanjutkan →
+            </button>
+        </div>
+    </main>
+
+    <!-- JavaScript untuk Card Selection -->
+    <script>
+        let selectedType = null;
+
+        // Add event listeners to all UMKM cards
+        document.querySelectorAll('.umkm-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Remove selection dari semua card
+                document.querySelectorAll('.umkm-card').forEach(c => {
+                    c.classList.remove('card-selected');
+                    c.querySelector('.select-btn').classList.remove('bg-cyan-100', 'text-cyan-600', 'border-cyan-400');
+                    c.querySelector('.select-btn').classList.add('bg-gray-50', 'text-gray-600', 'border-gray-200');
+                });
+
+                // Add selection ke card yang diklik
+                this.classList.add('card-selected');
+                const btn = this.querySelector('.select-btn');
+                btn.classList.remove('bg-gray-50', 'text-gray-600', 'border-gray-200');
+                btn.classList.add('bg-cyan-100', 'text-cyan-600', 'border-cyan-400');
+
+                // Store tipe yang dipilih
+                selectedType = this.dataset.type;
+
+                // Enable next button
+                document.getElementById('nextBtn').disabled = false;
+                document.getElementById('nextBtn').classList.remove('opacity-50', 'cursor-not-allowed');
+            });
+        });
+
+        function goToNextStep() {
+            if (selectedType) {
+                // Setiap tipe bisa diteruskan ke dashboard dengan state
+                localStorage.setItem('selectedUMKMType', selectedType);
+                window.location.href = 'dashboard.html';
+            }
+        }
+
+        function skipOnboarding() {
+            window.location.href = 'dashboard.html';
+        }
+
+        // Initialize Lucide Icons
+        lucide.createIcons();
+    </script>
+</body>
+</html>
