@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pengaturan - Web Ledger SAK EMKM</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .sidebar-active {
+            background-color: rgba(59, 130, 246, 0.1);
+            border-left: 4px solid #3B82F6;
+        }
+        .toast-notification {
+            animation: slideInRight 0.3s ease-out, slideOutRight 0.3s ease-out 2.7s forwards;
+        }
+        @keyframes slideInRight {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        @keyframes slideOutRight {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+        }
+        .logo-upload-circle {
+            width: 100px;
+            height: 100px;
+            background-color: #f3f4f6;
+            border: 2px dashed #d1d5db;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .logo-upload-circle:hover {
+            background-color: #e5e7eb;
+            border-color: #3B82F6;
+        }
+        .danger-zone {
+            background-color: #fef2f2;
+            border: 1px solid #fee2e2;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- HEADER -->
+    <header class="bg-white shadow-md sticky top-0 z-40">
+        <div class="flex items-center justify-between px-6 py-4">
+            <div class="flex items-center gap-3">
+                <button id="sidebarToggle" class="md:hidden p-2 hover:bg-gray-100 rounded-lg">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+                <h1 class="text-2xl font-bold text-gray-900">Pengaturan</h1>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="hidden md:flex bg-gray-100 rounded-lg px-4 py-2">
+                    <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                    <input type="text" placeholder="Cari pengaturan..." class="ml-2 bg-gray-100 outline-none w-40">
+                </div>
+                <!-- User Profile -->
+                <div class="flex items-center gap-3 border-l pl-4">
+                    <div class="text-right hidden sm:block">
+                        <p class="text-sm font-semibold text-gray-900">PT. Maju Jaya</p>
+                        <p class="text-xs text-gray-500">Pemilik</p>
+                    </div>
+                    <div class="w-10 h-10 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center text-white font-bold">
+                        MJ
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="flex h-screen overflow-hidden">
+        <!-- SIDEBAR NAVIGATION -->
+        <aside id="sidebar" class="w-64 bg-white shadow-lg overflow-y-auto transition-all duration-300 -translate-x-full md:translate-x-0 absolute md:relative h-full md:h-auto z-30 md:z-0">
+            <nav class="px-4 py-6">
+                <div class="flex items-center gap-2 mb-8 px-2">
+                    <img src="../gambar/logo.png" alt="Web Ledger Logo" class="w-8 h-8 object-contain">
+                    <span class="font-bold text-lg text-gray-900">Web Ledger</span>
+                </div>
+
+                <!-- Menu Items -->
+                <div class="space-y-2">
+                    <!-- Dashboard Menu -->
+                    <a href="dashboard.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
+                        </svg>
+                        <span class="font-medium">Dashboard</span>
+                    </a>
+
+                    <!-- Neraca Saldo Awal Menu -->
+                    <a href="neraca-saldo-awal.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                        <span class="font-medium">Neraca Saldo Awal</span>
+                    </a>
+
+                    <!-- Transaksi Menu -->
+                    <a href="transaksi.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <span class="font-medium">Transaksi</span>
+                    </a>
+
+                    <!-- Laporan Menu -->
+                    <a href="laporan.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                        <span class="font-medium">Laporan</span>
+                    </a>
+
+                    <!-- Edukasi Menu -->
+                    <a href="edukasi.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C6.228 6.228 2 10.228 2 15s4.228 8.772 10 8.772 10-4.228 10-8.772c0-4.772-4.228-8.747-10-8.747z"></path>
+                        </svg>
+                        <span class="font-medium">Edukasi</span>
+                    </a>
+
+                    <!-- Pengaturan Menu -->
+                    <a href="pengaturan.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 sidebar-active hover:bg-gray-100 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                        <span class="font-medium">Pengaturan</span>
+                    </a>
+                </div>
+
+                <!-- Divider -->
+                <hr class="my-6 border-gray-200">
+
+                <!-- Logout -->
+                <a href="../index.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-600 transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                    </svg>
+                    <span class="font-medium">Keluar</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="flex-1 overflow-y-auto">
+            <div class="p-6 md:p-8">
+                <!-- Page Header -->
+                <div class="mb-8">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-2">Pengaturan</h2>
+                    <p class="text-gray-600">Kelola profil usaha jasa, preferensi aplikasi, dan keamanan data Anda.</p>
+                </div>
+
+                <!-- CARD 1: PROFIL UMKM -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+                    <!-- Card Header -->
+                    <div class="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200">
+                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5.581m0 0H9m5.581 0a2 2 0 110-4h.581a2 2 0 110 4zM9 9h.009V9h-.009z"></path>
+                        </svg>
+                        <h3 class="text-xl font-bold text-gray-900">Profil Usaha</h3>
+                    </div>
+
+                    <form id="profilForm" class="space-y-6">
+                        <!-- Logo Upload -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-3">Logo Usaha</label>
+                            <div class="flex items-center gap-4">
+                                <div class="logo-upload-circle rounded-full flex items-center justify-center" id="logoUploadArea">
+                                    <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-medium text-gray-900">Upload Logo Baru</p>
+                                    <p class="text-xs text-gray-500">PNG, JPG, GIF. Maks 2MB</p>
+                                </div>
+                                <input type="file" id="logoInput" accept="image/*" class="hidden">
+                            </div>
+                        </div>
+
+                        <!-- Nama Usaha -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Nama Usaha</label>
+                            <input 
+                                type="text" 
+                                placeholder="Contoh: Studio Desain Kreatif" 
+                                value="Studio Desain Kreatif"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition"
+                            >
+                        </div>
+
+                        <!-- Tipe UMKM -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Tipe UMKM</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition bg-white">
+                                <option value="">Pilih Tipe UMKM</option>
+                                <option value="jasa">Jasa</option>
+                                <option value="dagang">Dagang</option>
+                                <option value="manufaktur">Manufaktur</option>
+                            </select>
+                        </div>
+
+                        <!-- Alamat Usaha -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Alamat Usaha</label>
+                            <textarea 
+                                placeholder="Masukkan alamat lengkap usaha Anda" 
+                                rows="4"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition resize-none"
+                            >Jalan Merdeka No. 123, Kota Wisata, Provinsi Jaya, 12345</textarea>
+                        </div>
+
+                        <!-- Button -->
+                        <div class="flex justify-end pt-4">
+                            <button 
+                                type="submit" 
+                                class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg transition transform hover:scale-105 active:scale-95 flex items-center gap-2"
+                            >
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                Simpan Profil
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- CARD 2: KEAMANAN LAPORAN -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+                    <!-- Card Header -->
+                    <div class="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200">
+                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                        </svg>
+                        <h3 class="text-xl font-bold text-gray-900">Keamanan Laporan</h3>
+                    </div>
+
+                    <!-- Penjelasan -->
+                    <p class="text-gray-600 text-sm mb-6">Atur PIN atau Secret Key yang digunakan untuk mendekripsi laporan PDF samaran Anda. Simpan kunci ini dengan aman.</p>
+
+                    <form id="keamananForm" class="space-y-4">
+                        <!-- PIN Saat Ini -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">PIN / Secret Key Saat Ini</label>
+                            <div class="relative">
+                                <input 
+                                    type="password" 
+                                    placeholder="Masukkan PIN Anda saat ini" 
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition"
+                                >
+                            </div>
+                        </div>
+
+                        <!-- PIN Baru -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">PIN / Secret Key Baru</label>
+                            <input 
+                                type="password" 
+                                placeholder="Masukkan PIN baru (minimal 6 karakter)" 
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition"
+                            >
+                            <p class="text-xs text-gray-500 mt-1">Kombinasikan huruf, angka, dan simbol untuk keamanan maksimal.</p>
+                        </div>
+
+                        <!-- Button -->
+                        <div class="flex justify-end pt-4">
+                            <button 
+                                type="submit" 
+                                class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg transition transform hover:scale-105 active:scale-95 flex items-center gap-2"
+                            >
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                                </svg>
+                                Perbarui Kunci Keamanan
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- CARD 3: MANAJEMEN DATA (DANGER ZONE) -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 danger-zone">
+                    <!-- Card Header -->
+                    <div class="flex items-center gap-3 mb-6 pb-4 border-b border-red-200">
+                        <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4v2m0 4v2M8 17H6a2 2 0 01-2-2V5a2 2 0 012-2h12a2 2 0 012 2v12a2 2 0 01-2 2h-2.75"></path>
+                        </svg>
+                        <h3 class="text-xl font-bold text-red-700">Manajemen Data Lokal</h3>
+                    </div>
+
+                    <div class="space-y-4">
+                        <!-- Backup Data -->
+                        <div class="flex items-center justify-between p-4 bg-white rounded-lg border border-gray-200">
+                            <div>
+                                <p class="font-medium text-gray-900">Backup Data Transaksi</p>
+                                <p class="text-sm text-gray-600">Export semua data ke format JSON</p>
+                            </div>
+                            <button 
+                                type="button" 
+                                onclick="downloadBackup()"
+                                class="px-4 py-2 border border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 transition"
+                            >
+                                <span class="flex items-center gap-2">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                                    </svg>
+                                    Download Backup
+                                </span>
+                            </button>
+                        </div>
+
+                        <!-- Reset Data -->
+                        <div class="flex items-center justify-between p-4 bg-white rounded-lg border border-red-300">
+                            <div>
+                                <p class="font-medium text-gray-900">Hapus Semua Data Transaksi</p>
+                                <p class="text-sm text-red-600">⚠️ Tindakan ini tidak dapat dibatalkan</p>
+                            </div>
+                            <button 
+                                type="button" 
+                                onclick="confirmResetData()"
+                                class="px-4 py-2 border-2 border-red-500 text-red-600 font-semibold rounded-lg hover:bg-red-50 transition"
+                            >
+                                <span class="flex items-center gap-2">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                    </svg>
+                                    Reset Data
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toastContainer" class="fixed top-6 right-6 z-50"></div>
+
+    <script>
+        // ===== SIDEBAR TOGGLE =====
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const sidebar = document.getElementById('sidebar');
+
+        sidebarToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('-translate-x-full');
+        });
+
+        // Close sidebar when clicking on main content (mobile)
+        document.querySelector('main').addEventListener('click', () => {
+            if (window.innerWidth < 768) {
+                sidebar.classList.add('-translate-x-full');
+            }
+        });
+
+        // ===== LOGO UPLOAD =====
+        const logoUploadArea = document.getElementById('logoUploadArea');
+        const logoInput = document.getElementById('logoInput');
+
+        logoUploadArea.addEventListener('click', () => {
+            logoInput.click();
+        });
+
+        logoInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    logoUploadArea.innerHTML = `<img src="${event.target.result}" alt="Logo" class="w-full h-full object-cover rounded-full">`;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // ===== FORM SUBMISSIONS =====
+        const profilForm = document.getElementById('profilForm');
+        const keamananForm = document.getElementById('keamananForm');
+
+        profilForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            showToast('✓ Profil usaha berhasil disimpan!');
+        });
+
+        keamananForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            showToast('✓ Kunci keamanan berhasil diperbarui!');
+        });
+
+        // ===== TOAST NOTIFICATION FUNCTION =====
+        function showToast(message) {
+            const toastContainer = document.getElementById('toastContainer');
+            
+            const toast = document.createElement('div');
+            toast.className = 'toast-notification bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg flex items-center gap-2';
+            toast.innerHTML = message;
+            
+            toastContainer.appendChild(toast);
+
+            // Remove toast after 3 seconds
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        }
+
+        // ===== BACKUP DATA FUNCTION =====
+        function downloadBackup() {
+            // Simulasi data backup
+            const backupData = {
+                timestamp: new Date().toISOString(),
+                namaUsaha: 'Studio Desain Kreatif',
+                typeUMKM: 'jasa',
+                transaksi: [
+                    { id: 1, tanggal: '2026-03-01', deskripsi: 'Layanan Desain Logo', jumlah: 2500000 },
+                    { id: 2, tanggal: '2026-03-02', deskripsi: 'Biaya Konsultasi Branding', jumlah: -1500000 },
+                    { id: 3, tanggal: '2026-03-03', deskripsi: 'Layanan Website Design', jumlah: 5000000 }
+                ],
+                totalTransaksi: 3
+            };
+
+            const dataStr = JSON.stringify(backupData, null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `backup-data-${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+
+            showToast('✓ Data backup berhasil diunduh!');
+        }
+
+        // ===== RESET DATA CONFIRMATION =====
+        function confirmResetData() {
+            if (confirm('⚠️ Peringatan: Anda akan menghapus SEMUA data transaksi. Tindakan ini tidak dapat dibatalkan!\n\nKetik "HAPUS" di prompt berikut untuk mengkonfirmasi.')) {
+                const confirmation = prompt('Ketik "HAPUS" untuk mengkonfirmasi penghapusan data:');
+                if (confirmation === 'HAPUS') {
+                    // Simulasi reset data
+                    showToast('✓ Semua data transaksi berhasil dihapus!');
+                } else {
+                    showToast('✗ Pembatalan perubahan data dibatalkan.');
+                }
+            }
+        }
+
+        // ===== INITIALIZE LUCIDE ICONS =====
+        lucide.createIcons();
+    </script>
+</body>
+</html>

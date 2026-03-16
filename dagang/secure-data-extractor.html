@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Data Extractor - Web Ledger SAK EMKM</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Custom Animation -->
+    <style>
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+                transform: scale(1);
+            }
+            to {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes progressPulse {
+            0%, 100% {
+                background-position: 200% 0;
+            }
+            50% {
+                background-position: -200% 0;
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .animate-fade-out {
+            animation: fadeOut 0.3s ease-in-out;
+            pointer-events: none;
+        }
+
+        .animate-slide-down {
+            animation: slideDown 0.5s ease-out;
+        }
+
+        .progress-bar-animated {
+            background: linear-gradient(
+                90deg,
+                #1e40af 0%,
+                #3b82f6 50%,
+                #1e40af 100%
+            );
+            background-size: 200% 100%;
+            animation: progressPulse 2s ease-in-out infinite;
+        }
+
+        .hidden-state {
+            display: none;
+        }
+
+        /* Glassmorphism effect untuk modal */
+        .modal-backdrop {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+        }
+
+        /* Dropzone hover effect */
+        .dropzone-area {
+            transition: all 0.3s ease;
+            border: 2px dashed #cbd5e1;
+        }
+
+        .dropzone-area:hover,
+        .dropzone-area.drag-over {
+            border-color: #1e40af;
+            background-color: #eff6ff;
+        }
+
+        /* Lock icon animation */
+        @keyframes lockBounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        .animate-lock-bounce {
+            animation: lockBounce 2s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-slate-900 to-slate-800">
+    <!-- Demo Container -->
+    <div class="min-h-screen flex items-center justify-center p-4">
+        <!-- Modal Backdrop -->
+        <div class="modal-backdrop fixed inset-0 transition-all duration-300"></div>
+
+        <!-- Secure Data Extractor Modal -->
+        <div class="relative w-full max-w-2xl bg-white rounded-2xl shadow-2xl overflow-hidden">
+            <!-- Header dengan Gradient -->
+            <div class="bg-gradient-to-r from-blue-900 to-blue-700 px-8 py-8">
+                <div class="flex items-center justify-between mb-2">
+                    <div class="flex items-center gap-4">
+                        <div class="animate-lock-bounce">
+                            <img src="../gambar/logo.png" alt="Web Ledger SAK EMKM Logo" class="w-12 h-12 object-contain">
+                        </div>
+                        <h1 class="text-3xl font-bold text-white">Secure Document Extractor</h1>
+                    </div>
+                </div>
+                <p class="text-blue-100 text-sm">Unggah dokumen samaran untuk mengekstrak laporan keuangan asli</p>
+            </div>
+
+            <!-- Container Konten -->
+            <div class="p-8">
+                <!-- STATE 1: Upload State (Tampilan Awal) -->
+                <div id="uploadState" class="animate-fade-in">
+                    <!-- Dropzone Area -->
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-3">
+                            Dokumen Samaran (PDF)
+                        </label>
+                        <div class="dropzone-area p-8 rounded-lg text-center cursor-pointer" id="dropzone">
+                            <svg class="w-16 h-16 mx-auto mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                            </svg>
+                            <p class="text-gray-600 font-medium">Drag & Drop PDF Samaran di sini</p>
+                            <p class="text-gray-400 text-sm mt-1">atau klik untuk browse</p>
+                        </div>
+                        <input type="file" id="fileInput" accept=".pdf" class="hidden">
+                    </div>
+
+                    <!-- Password Input -->
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Kunci Dekripsi (Secret Key)
+                        </label>
+                        <div class="relative">
+                            <svg class="w-5 h-5 absolute left-3 top-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                            </svg>
+                            <input 
+                                type="password" 
+                                id="secretKey" 
+                                placeholder="Masukkan Kunci Dekripsi" 
+                                class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-900 focus:border-transparent transition"
+                            >
+                        </div>
+                        <p class="text-gray-500 text-xs mt-1">Kunci ini digunakan untuk mendekripsi data tersembunyi</p>
+                    </div>
+
+                    <!-- File info placeholder -->
+                    <div id="fileInfo" class="mb-6 hidden bg-blue-50 border border-blue-200 rounded-lg p-3">
+                        <p class="text-sm text-blue-900">📄 <span id="fileName">File selected</span></p>
+                    </div>
+
+                    <!-- Extract Button -->
+                    <div class="flex gap-3">
+                        <button 
+                            id="extractBtn" 
+                            class="flex-1 bg-gradient-to-r from-blue-900 to-blue-700 hover:from-blue-950 hover:to-blue-800 text-white font-bold py-3 px-4 rounded-lg transition transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                            <span class="flex items-center justify-center gap-2">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                Ekstrak Dokumen
+                            </span>
+                        </button>
+                        <button 
+                            id="closeBtn" 
+                            class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 px-6 rounded-lg transition"
+                        >
+                            Batal
+                        </button>
+                    </div>
+                </div>
+
+                <!-- STATE 2: Loading State (Processing State) -->
+                <div id="loadingState" class="hidden-state">
+                    <div class="text-center py-12">
+                        <!-- Spinner Animation -->
+                        <div class="flex justify-center mb-6">
+                            <div class="relative w-16 h-16">
+                                <div class="absolute inset-0 bg-gradient-to-r from-blue-900 to-blue-500 rounded-full animate-spin opacity-75"></div>
+                                <div class="absolute inset-2 bg-white rounded-full flex items-center justify-center">
+                                    <svg class="w-8 h-8 text-blue-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4">Mengekstrak Dokumen</h2>
+
+                        <!-- Progress Bar -->
+                        <div class="mb-6">
+                            <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
+                                <div 
+                                    id="progressBar" 
+                                    class="progress-bar-animated h-full transition-all duration-500"
+                                    style="width: 0%"
+                                ></div>
+                            </div>
+                            <p class="text-gray-500 text-xs mt-2"><span id="progressPercent">0</span>%</p>
+                        </div>
+
+                        <!-- Status Messages -->
+                        <div class="space-y-2 text-sm text-gray-600">
+                            <p id="status1" class="flex items-center gap-2 text-gray-400">
+                                <span class="inline-block w-1.5 h-1.5 bg-gray-400 rounded-full"></span>
+                                Menganalisis byte file...
+                            </p>
+                            <p id="status2" class="flex items-center gap-2 text-gray-400">
+                                <span class="inline-block w-1.5 h-1.5 bg-gray-400 rounded-full"></span>
+                                Menemukan hidden payload...
+                            </p>
+                            <p id="status3" class="flex items-center gap-2 text-gray-400">
+                                <span class="inline-block w-1.5 h-1.5 bg-gray-400 rounded-full"></span>
+                                Mendekripsi data SAK EMKM...
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STATE 3: Result State (Success State) -->
+                <div id="resultState" class="hidden-state">
+                    <!-- Success Message -->
+                    <div class="mb-6 bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-500 rounded-lg p-6 animate-slide-down">
+                        <div class="flex items-center gap-3 mb-2">
+                            <div class="flex-shrink-0">
+                                <svg class="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-green-700">Ekstraksi Berhasil!</h3>
+                        </div>
+                        <p class="text-green-600 text-sm">Data rahasia telah berhasil didekripsi dan diekstrak</p>
+                    </div>
+
+                    <!-- Report Mockup -->
+                    <div class="mb-6 bg-gray-50 border border-gray-200 rounded-lg p-6 animate-slide-down" style="animation-delay: 0.1s;">
+                        <div class="border-b border-gray-300 pb-4 mb-4">
+                            <h3 class="text-lg font-bold text-gray-800">📊 Laporan Laba Rugi Rahasia</h3>
+                            <p class="text-xs text-gray-500 mt-1">Periode: Januari - Desember 2025 | Status: Terenkripsi</p>
+                        </div>
+
+                        <div class="space-y-3">
+                            <!-- Revenue -->
+                            <div class="flex justify-between items-center py-2 border-b border-gray-200">
+                                <span class="text-gray-700 font-medium">Pendapatan Penjualan</span>
+                                <span class="text-gray-900 font-bold">Rp 2.750.000.000</span>
+                            </div>
+
+                            <!-- COGS -->
+                            <div class="flex justify-between items-center py-2 border-b border-gray-200">
+                                <span class="text-gray-700 font-medium">Harga Pokok Penjualan</span>
+                                <span class="text-red-600 font-bold">- Rp 1.650.000.000</span>
+                            </div>
+
+                            <!-- Gross Profit -->
+                            <div class="flex justify-between items-center py-2 bg-blue-50 px-3 rounded border-b border-gray-200 font-bold">
+                                <span class="text-gray-800">Laba Kotor</span>
+                                <span class="text-blue-900">Rp 1.100.000.000</span>
+                            </div>
+
+                            <!-- Operating Expenses -->
+                            <div class="flex justify-between items-center py-2 border-b border-gray-200">
+                                <span class="text-gray-700 font-medium">Beban Operasional</span>
+                                <span class="text-red-600 font-bold">- Rp 380.000.000</span>
+                            </div>
+
+                            <!-- Net Profit -->
+                            <div class="flex justify-between items-center py-3 bg-gradient-to-r from-green-100 to-emerald-100 px-4 rounded-lg font-bold">
+                                <span class="text-gray-800">Laba Bersih</span>
+                                <span class="text-green-700 text-lg">Rp 720.000.000</span>
+                            </div>
+
+                            <!-- Additional Info -->
+                            <div class="mt-4 pt-3 border-t border-gray-200 text-xs text-gray-500 space-y-1">
+                                <p>✓ Status SAK EMKM: Terverifikasi</p>
+                                <p>✓ Tanda Tangan Digital: Valid</p>
+                                <p>✓ Timestamp: 2024-12-31 23:59:59 UTC</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="flex gap-3">
+                        <button 
+                            id="downloadBtn" 
+                            class="flex-1 bg-blue-900 hover:bg-blue-950 text-white font-bold py-3 px-4 rounded-lg transition transform hover:scale-105 active:scale-95 flex items-center justify-center gap-2"
+                        >
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                            </svg>
+                            Unduh Laporan
+                        </button>
+                        <button 
+                            id="closeResultBtn" 
+                            class="flex-1 bg-red-100 hover:bg-red-200 text-red-700 font-bold py-3 px-4 rounded-lg transition flex items-center justify-center gap-2"
+                        >
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                            </svg>
+                            Tutup & Hapus Jejak
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== ELEMENTS REFERENCES =====
+        const uploadState = document.getElementById('uploadState');
+        const loadingState = document.getElementById('loadingState');
+        const resultState = document.getElementById('resultState');
+
+        const dropzone = document.getElementById('dropzone');
+        const fileInput = document.getElementById('fileInput');
+        const secretKey = document.getElementById('secretKey');
+        const extractBtn = document.getElementById('extractBtn');
+        const closeBtn = document.getElementById('closeBtn');
+        const closeResultBtn = document.getElementById('closeResultBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+
+        const progressBar = document.getElementById('progressBar');
+        const progressPercent = document.getElementById('progressPercent');
+        const fileInfo = document.getElementById('fileInfo');
+        const fileName = document.getElementById('fileName');
+
+        let selectedFile = null;
+
+        // ===== DROPZONE HANDLERS =====
+        dropzone.addEventListener('click', () => fileInput.click());
+
+        dropzone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropzone.classList.add('drag-over');
+        });
+
+        dropzone.addEventListener('dragleave', () => {
+            dropzone.classList.remove('drag-over');
+        });
+
+        dropzone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropzone.classList.remove('drag-over');
+            
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFileSelect(files[0]);
+            }
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                handleFileSelect(e.target.files[0]);
+            }
+        });
+
+        function handleFileSelect(file) {
+            if (file.type === 'application/pdf') {
+                selectedFile = file;
+                fileName.textContent = file.name;
+                fileInfo.classList.remove('hidden');
+                extractBtn.disabled = false;
+            } else {
+                alert('Hanya file PDF yang diizinkan!');
+                fileInput.value = '';
+                selectedFile = null;
+            }
+        }
+
+        // ===== STATE TRANSITIONS =====
+        function showUploadState() {
+            uploadState.classList.remove('hidden-state', 'animate-fade-out');
+            uploadState.classList.add('animate-fade-in');
+            loadingState.classList.add('hidden-state');
+            resultState.classList.add('hidden-state');
+        }
+
+        function showLoadingState() {
+            uploadState.classList.add('animate-fade-out');
+            setTimeout(() => {
+                uploadState.classList.add('hidden-state');
+                loadingState.classList.remove('hidden-state', 'animate-fade-out');
+                loadingState.classList.add('animate-fade-in');
+            }, 300);
+        }
+
+        function showResultState() {
+            loadingState.classList.add('animate-fade-out');
+            setTimeout(() => {
+                loadingState.classList.add('hidden-state');
+                resultState.classList.remove('hidden-state', 'animate-fade-out');
+                resultState.classList.add('animate-fade-in');
+            }, 300);
+        }
+
+        // ===== LOADING ANIMATION =====
+        function animateLoading() {
+            const statuses = [
+                document.getElementById('status1'),
+                document.getElementById('status2'),
+                document.getElementById('status3')
+            ];
+
+            return new Promise((resolve) => {
+                let progress = 0;
+                let currentStep = 0;
+
+                const interval = setInterval(() => {
+                    progress += Math.random() * 35;
+                    if (progress > 100) progress = 100;
+
+                    progressBar.style.width = progress + '%';
+                    progressPercent.textContent = Math.floor(progress);
+
+                    // Activate status messages based on progress
+                    if (progress > 30 && currentStep < 1) {
+                        currentStep = 1;
+                        statuses[0].classList.remove('text-gray-400');
+                        statuses[0].classList.add('text-blue-600');
+                        statuses[0].querySelector('span').classList.remove('bg-gray-400');
+                        statuses[0].querySelector('span').classList.add('bg-blue-600');
+                    }
+
+                    if (progress > 60 && currentStep < 2) {
+                        currentStep = 2;
+                        statuses[1].classList.remove('text-gray-400');
+                        statuses[1].classList.add('text-blue-600');
+                        statuses[1].querySelector('span').classList.remove('bg-gray-400');
+                        statuses[1].querySelector('span').classList.add('bg-blue-600');
+                    }
+
+                    if (progress > 85 && currentStep < 3) {
+                        currentStep = 3;
+                        statuses[2].classList.remove('text-gray-400');
+                        statuses[2].classList.add('text-blue-600');
+                        statuses[2].querySelector('span').classList.remove('bg-gray-400');
+                        statuses[2].querySelector('span').classList.add('bg-blue-600');
+                    }
+
+                    if (progress >= 100) {
+                        clearInterval(interval);
+                        resolve();
+                    }
+                }, 300);
+            });
+        }
+
+        // ===== EXTRACT DOCUMENT HANDLER =====
+        extractBtn.addEventListener('click', async () => {
+            if (!selectedFile || !secretKey.value) {
+                alert('Silakan pilih file dan masukkan kunci dekripsi!');
+                return;
+            }
+
+            showLoadingState();
+            await animateLoading();
+
+            // Simulasi delay 3 detik total
+            await new Promise(resolve => setTimeout(resolve, 700));
+
+            showResultState();
+        });
+
+        // ===== CLOSE HANDLERS =====
+        closeBtn.addEventListener('click', () => {
+            showUploadState();
+            // Reset form
+            fileInput.value = '';
+            secretKey.value = '';
+            selectedFile = null;
+            fileInfo.classList.add('hidden');
+            extractBtn.disabled = false;
+            progressBar.style.width = '0%';
+            progressPercent.textContent = '0';
+        });
+
+        closeResultBtn.addEventListener('click', () => {
+            showUploadState();
+            // Reset form
+            fileInput.value = '';
+            secretKey.value = '';
+            selectedFile = null;
+            fileInfo.classList.add('hidden');
+            extractBtn.disabled = false;
+            progressBar.style.width = '0%';
+            progressPercent.textContent = '0';
+            
+            // Reset status indicators
+            const statuses = [
+                document.getElementById('status1'),
+                document.getElementById('status2'),
+                document.getElementById('status3')
+            ];
+            statuses.forEach(status => {
+                status.classList.add('text-gray-400');
+                status.classList.remove('text-blue-600');
+                status.querySelector('span').classList.add('bg-gray-400');
+                status.querySelector('span').classList.remove('bg-blue-600');
+            });
+        });
+
+        downloadBtn.addEventListener('click', () => {
+            alert('Laporan telah diunduh sebagai file terenkripsi!\n\n✓ File: Laporan_Laba-Rugi_Rahasia_2025.pdf\n✓ Ukuran: 2.4 MB\n✓ Status: Terenkripsi dengan AES-256');
+        });
+
+        // ===== INITIALIZE LUCIDE ICONS =====
+        lucide.createIcons();
+    </script>
+</body>
+</html>
