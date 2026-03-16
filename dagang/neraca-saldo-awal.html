@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neraca Saldo Awal - Web Ledger SAK EMKM</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .sidebar-active {
+            background-color: rgba(59, 130, 246, 0.1);
+            border-left: 4px solid #3B82F6;
+        }
+        .form-input {
+            @apply w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition;
+        }
+        .table-input {
+            @apply w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-right font-semibold transition;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- HEADER -->
+    <header class="bg-white shadow-md sticky top-0 z-40">
+        <div class="flex items-center justify-between px-6 py-4">
+            <div class="flex items-center gap-3">
+                <button id="sidebarToggle" class="md:hidden p-2 hover:bg-gray-100 rounded-lg">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+                <h1 class="text-2xl font-bold text-gray-900">Neraca Saldo Awal</h1>
+            </div>
+            <div class="flex items-center gap-4">
+                <!-- User Profile -->
+                <div class="flex items-center gap-3 border-l pl-4">
+                    <div class="text-right hidden sm:block">
+                        <p class="text-sm font-semibold text-gray-900">PT. Maju Jaya</p>
+                        <p class="text-xs text-gray-500">Pemilik</p>
+                    </div>
+                    <div class="w-10 h-10 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center text-white font-bold">
+                        MJ
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="flex h-screen overflow-hidden">
+        <!-- SIDEBAR NAVIGATION -->
+        <aside id="sidebar" class="w-64 bg-white shadow-lg overflow-y-auto transition-all duration-300 -translate-x-full md:translate-x-0 absolute md:relative h-full md:h-auto z-30 md:z-0">
+            <nav class="px-4 py-6">
+                <!-- Logo -->
+                <div class="flex items-center gap-2 mb-8 px-2">
+                    <div class="w-8 h-8 bg-gradient-to-br from-blue-400 to-blue-600 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold">₽</span>
+                    </div>
+                    <span class="font-bold text-lg text-gray-900">Web Ledger</span>
+                </div>
+
+                <!-- Menu Items -->
+                <div class="space-y-2">
+                    <!-- Dashboard Menu -->
+                    <a href="dashboard.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
+                        </svg>
+                        <span class="font-medium">Dashboard</span>
+                    </a>
+                    
+                                        <!-- Neraca Saldo Awal Menu (Active) -->
+                                        <a href="neraca-saldo-awal.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-blue-600 sidebar-active hover:bg-gray-100 transition">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                                            </svg>
+                                            <span class="font-medium">Neraca Saldo Awal</span>
+                                        </a>
+
+                    <!-- Transaksi Menu -->
+                    <a href="transaksi.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <span class="font-medium">Transaksi</span>
+                    </a>
+
+                    <!-- Laporan Menu -->
+                    <a href="laporan.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                        <span class="font-medium">Laporan</span>
+                    </a>
+
+                    <!-- Edukasi Menu -->
+                    <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C6.228 6.228 2 10.228 2 15s4.228 8.772 10 8.772 10-4.228 10-8.772c0-4.772-4.228-8.747-10-8.747z"></path>
+                        </svg>
+                        <span class="font-medium">Edukasi</span>
+                    </a>
+
+                    <!-- Pengaturan Menu -->
+                    <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                        <span class="font-medium">Pengaturan</span>
+                    </a>
+                </div>
+
+                <hr class="my-6 border-gray-200">
+
+                <!-- Logout Menu -->
+                <a href="index.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-600 transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                    </svg>
+                    <span class="font-medium">Keluar</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="flex-1 overflow-auto p-4 md:p-8">
+            <!-- Page Header -->
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-gray-900 mb-2">Neraca Saldo Awal</h2>
+                <p class="text-gray-600">Masukkan saldo awal aset, kewajiban, dan modal sebelum memulai pencatatan transaksi.</p>
+            </div>
+
+            <!-- INFO ALERT: Balance Requirement -->
+            <div class="mb-8 p-4 bg-blue-50 border-l-4 border-blue-500 rounded-lg">
+                <div class="flex items-start gap-3">
+                    <svg class="w-6 h-6 text-blue-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+                    </svg>
+                    <div>
+                        <h3 class="text-sm font-semibold text-blue-900">Penting: Harus Seimbang</h3>
+                        <p class="text-sm text-blue-800 mt-1">Total Debit dan Total Kredit harus sama (balance). Ini memastikan catatan keuangan Anda sesuai dengan prinsip akuntansi dasar.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NERACA SALDO AWAL TABLE SECTION -->
+            <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                <!-- Table Header -->
+                <div class="px-6 py-4 border-b border-gray-200 bg-gray-50 flex items-center justify-between">
+                    <h3 class="text-lg font-bold text-gray-900">Input Saldo Awal Akun (wajib diisi)</h3>
+                    <button id="btnTambahAkun" class="flex items-center gap-2 px-4 py-2 border-2 border-blue-400 text-blue-600 font-semibold rounded-lg hover:bg-blue-50 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                        </svg>
+                        <span>Tambah Akun Baru</span>
+                    </button>
+                </div>
+
+                <!-- Table Responsive -->
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="bg-gray-50 border-b border-gray-200">
+                                <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900">Kode Akun</th>
+                                <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900">Nama Akun</th>
+                                <th class="px-6 py-3 text-right text-sm font-semibold text-gray-900">Debit (Rp)</th>
+                                <th class="px-6 py-3 text-right text-sm font-semibold text-gray-900">Kredit (Rp)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200" id="tabelNeraca">
+                            <!-- ASET Section -->
+                            <!-- Row 1: Kas -->
+                            <tr class="hover:bg-gray-50 transition">
+                                <td class="px-6 py-4 text-sm font-semibold text-gray-700">1001</td>
+                                <td class="px-6 py-4 text-sm text-gray-700">Kas</td>
+                                <td class="px-6 py-4">
+                                    <input type="number" placeholder="0" class="table-input debit-input" value="50000000" data-akun="Kas">
+                                </td>
+                                <td class="px-6 py-4">
+                                    <input type="number" placeholder="0" class="table-input kredit-input" value="0" data-akun="Kas">
+                                </td>
+                            </tr>
+
+                            <!-- Row 2: Bank -->
+                            <tr class="hover:bg-gray-50 transition">
+                                <td class="px-6 py-4 text-sm font-semibold text-gray-700">1002</td>
+                                <td class="px-6 py-4 text-sm text-gray-700">Bank</td>
+                                <td class="px-6 py-4">
+                                    <input type="number" placeholder="0" class="table-input debit-input" value="75000000" data-akun="Bank">
+                                </td>
+                                <td class="px-6 py-4">
+                                    <input type="number" placeholder="0" class="table-input kredit-input" value="0" data-akun="Bank">
+                                </td>
+                            </tr>
+
+                            <!-- Row 3: Piutang -->
+                            <tr class="hover:bg-gray-50 transition">
+                                <td class="px-6 py-4 text-sm font-semibold text-gray-700">1003</td>
+                                <td class="px-6 py-4 text-sm text-gray-700">Piutang Dagang</td>
+                                <td class="px-6 py-4">
+                                    <input type="number" placeholder="0" class="table-input debit-input" value="25000000" data-akun="Piutang Dagang">
+                                </td>
+                                <td class="px-6 py-4">
+                                    <input type="number" placeholder="0" class="table-input kredit-input" value="0" data-akun="Piutang Dagang">
+                                </td>
+                            </tr>
+
+                            <!-- Row 4: Persediaan -->
+                            <tr class="hover:bg-gray-50 transition">
+                                <td class="px-6 py-4 text-sm font-semibold text-gray-700">1004</td>
+                                <td class="px-6 py-4 text-sm text-gray-700">Persediaan Barang</td>
+                                <td class="px-6 py-4">
+                                    <input type="number" placeholder="0" class="table-input debit-input" value="40000000" data-akun="Persediaan Barang">
+                                </td>
+                                <td class="px-6 py-4">
+                                    <input type="number" placeholder="0" class="table-input kredit-input" value="0" data-akun="Persediaan Barang">
+                                </td>
+                            </tr>
+
+                            <!-- Row 5: Peralatan -->
+                            <tr class="hover:bg-gray-50 transition">
+                                <td class="px-6 py-4 text-sm font-semibold text-gray-700">1005</td>
+                                <td class="px-6 py-4 text-sm text-gray-700">Peralatan & Mesin</td>
+                                <td class="px-6 py-4">
+                                    <input type="number" placeholder="0" class="table-input debit-input" value="100000000" data-akun="Peralatan & Mesin">
+                                </td>
+                                <td class="px-6 py-4">
+                                    <input type="number" placeholder="0" class="table-input kredit-input" value="0" data-akun="Peralatan & Mesin">
+                                </td>
+                            </tr>
+
+                            <!-- Row 6: Akumulasi Penyusutan -->
+                            <tr class="hover:bg-gray-50 transition bg-red-50">
+                                <td class="px-6 py-4 text-sm font-semibold text-gray-700">1006</td>
+                                <td class="px-6 py-4 text-sm text-gray-700">Akumulasi Penyusutan</td>
+                                <td class="px-6 py-4">
+                                    <input type="number" placeholder="0" class="table-input debit-input" value="0" data-akun="Akumulasi Penyusutan">
+                                </td>
+                                <td class="px-6 py-4">
+                                    <input type="number" placeholder="0" class="table-input kredit-input" value="10000000" data-akun="Akumulasi Penyusutan">
+                                </td>
+                            </tr>
+
+                            <!-- Separator: KEWAJIBAN -->
+                            <tr class="bg-gray-100">
+                                <td colspan="4" class="px-6 py-3 text-sm font-bold text-gray-900">KEWAJIBAN (LIABILITAS)</td>
+                            </tr>
+
+                            <!-- Row 7: Utang Dagang -->
+                            <tr class="hover:bg-gray-50 transition">
+                                <td class="px-6 py-4 text-sm font-semibold text-gray-700">2001</td>
+                                <td class="px-6 py-4 text-sm text-gray-700">Utang Dagang</td>
+                                <td class="px-6 py-4">
+                                    <input type="number" placeholder="0" class="table-input debit-input" value="0" data-akun="Utang Dagang">
+                                </td>
+                                <td class="px-6 py-4">
+                                    <input type="number" placeholder="0" class="table-input kredit-input" value="30000000" data-akun="Utang Dagang">
+                                </td>
+                            </tr>
+
+                            <!-- Row 8: Utang Bank -->
+                            <tr class="hover:bg-gray-50 transition">
+                                <td class="px-6 py-4 text-sm font-semibold text-gray-700">2002</td>
+                                <td class="px-6 py-4 text-sm text-gray-700">Utang Bank (Jangka Pendek)</td>
+                                <td class="px-6 py-4">
+                                    <input type="number" placeholder="0" class="table-input debit-input" value="0" data-akun="Utang Bank SP">
+                                </td>
+                                <td class="px-6 py-4">
+                                    <input type="number" placeholder="0" class="table-input kredit-input" value="20000000" data-akun="Utang Bank SP">
+                                </td>
+                            </tr>
+
+                            <!-- Row 9: Utang Bank Jangka Panjang -->
+                            <tr class="hover:bg-gray-50 transition">
+                                <td class="px-6 py-4 text-sm font-semibold text-gray-700">2003</td>
+                                <td class="px-6 py-4 text-sm text-gray-700">Utang Bank (Jangka Panjang)</td>
+                                <td class="px-6 py-4">
+                                    <input type="number" placeholder="0" class="table-input debit-input" value="0" data-akun="Utang Bank JP">
+                                </td>
+                                <td class="px-6 py-4">
+                                    <input type="number" placeholder="0" class="table-input kredit-input" value="50000000" data-akun="Utang Bank JP">
+                                </td>
+                            </tr>
+
+                            <!-- Separator: EKUITAS/MODAL -->
+                            <tr class="bg-gray-100">
+                                <td colspan="4" class="px-6 py-3 text-sm font-bold text-gray-900">EKUITAS (MODAL)</td>
+                            </tr>
+
+                            <!-- Row 10: Modal Awal -->
+                            <tr class="hover:bg-gray-50 transition">
+                                <td class="px-6 py-4 text-sm font-semibold text-gray-700">3001</td>
+                                <td class="px-6 py-4 text-sm text-gray-700">Modal Pemilik</td>
+                                <td class="px-6 py-4">
+                                    <input type="number" placeholder="0" class="table-input debit-input" value="0" data-akun="Modal Pemilik">
+                                </td>
+                                <td class="px-6 py-4">
+                                    <input type="number" placeholder="0" class="table-input kredit-input" value="275000000" data-akun="Modal Pemilik">
+                                </td>
+                            </tr>
+
+                            <!-- Row 11: Saldo Laba -->
+                            <tr class="hover:bg-gray-50 transition">
+                                <td class="px-6 py-4 text-sm font-semibold text-gray-700">3002</td>
+                                <td class="px-6 py-4 text-sm text-gray-700">Saldo Laba Ditahan</td>
+                                <td class="px-6 py-4">
+                                    <input type="number" placeholder="0" class="table-input debit-input" value="0" data-akun="Saldo Laba Ditahan">
+                                </td>
+                                <td class="px-6 py-4">
+                                    <input type="number" placeholder="0" class="table-input kredit-input" value="0" data-akun="Saldo Laba Ditahan">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- SUMMARY FOOTER -->
+                <div class="border-t-2 border-gray-300 bg-gray-50">
+                    <!-- Total Row -->
+                    <div class="grid grid-cols-4 gap-0">
+                        <!-- Kode Akun (Empty) -->
+                        <div class="px-6 py-4 text-sm font-semibold text-gray-700"></div>
+
+                        <!-- Nama Akun (Total) -->
+                        <div class="px-6 py-4 text-sm font-bold text-gray-900 bg-blue-100 border-r border-gray-200">
+                            TOTAL
+                        </div>
+
+                        <!-- Total Debit -->
+                        <div class="px-6 py-4">
+                            <div class="text-lg font-bold text-blue-600 text-right" id="totalDebit">290,000,000</div>
+                        </div>
+
+                        <!-- Total Kredit -->
+                        <div class="px-6 py-4">
+                            <div class="text-lg font-bold text-blue-600 text-right" id="totalKredit">290,000,000</div>
+                        </div>
+                    </div>
+
+                    <!-- Balance Status Row -->
+                    <div class="grid grid-cols-4 gap-0 border-t border-gray-200">
+                        <!-- Empty cells -->
+                        <div class="px-6 py-4"></div>
+                        <div class="px-6 py-4 text-sm font-semibold text-gray-700 bg-blue-100">Status Keseimbangan</div>
+
+                        <!-- Balance Status Badge -->
+                        <div class="px-6 py-4 col-span-2">
+                            <span id="statusBadge" class="inline-block px-4 py-2 bg-green-100 text-green-700 font-bold rounded-full text-sm">
+                                ✓ Seimbang
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ACTION BUTTONS -->
+            <div class="mt-8 flex justify-end gap-4">
+                <button type="button" class="px-8 py-3 border-2 border-gray-300 text-gray-700 font-bold rounded-lg hover:bg-gray-100 transition">
+                    Batal
+                </button>
+                <button type="submit" class="px-8 py-3 bg-gradient-to-r from-blue-400 to-blue-600 text-white font-bold rounded-lg hover:shadow-lg transition transform hover:scale-105">
+                    Simpan Saldo Awal
+                </button>
+            </div>
+        </main>
+
+        <!-- MODAL: TAMBAH AKUN BARU -->
+        <div id="modalTambahAkun" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div class="bg-white rounded-xl shadow-2xl w-full max-w-md p-6 mx-4">
+                <!-- Modal Header -->
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900">Tambah Akun Baru</h2>
+                    <button id="btnCloseModal" class="p-2 hover:bg-gray-100 rounded-lg transition">
+                        <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Modal Form -->
+                <form id="formTambahAkun" class="space-y-4">
+                    <!-- Input Kode Akun -->
+                    <div>
+                        <label for="inputKodeAkun" class="block text-sm font-semibold text-gray-700 mb-2">Kode Akun*</label>
+                        <input type="text" id="inputKodeAkun" placeholder="Contoh: 1007" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
+                    </div>
+
+                    <!-- Input Nama Akun -->
+                    <div>
+                        <label for="inputNamaAkun" class="block text-sm font-semibold text-gray-700 mb-2">Nama Akun*</label>
+                        <input type="text" id="inputNamaAkun" placeholder="Contoh: Kas di Tangan" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
+                    </div>
+
+                    <!-- Select Posisi Saldo Normal -->
+                    <div>
+                        <label for="selectPosisiSaldo" class="block text-sm font-semibold text-gray-700 mb-2">Posisi Saldo Normal*</label>
+                        <select id="selectPosisiSaldo" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
+                            <option value="">-- Pilih Posisi Saldo --</option>
+                            <option value="debit">Debit</option>
+                            <option value="kredit">Kredit</option>
+                        </select>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="flex gap-3 pt-4">
+                        <button type="button" id="btnBatalModal" class="flex-1 px-4 py-3 border-2 border-gray-300 text-gray-700 font-bold rounded-lg hover:bg-gray-100 transition">
+                            Batal
+                        </button>
+                        <button type="submit" class="flex-1 px-4 py-3 bg-gradient-to-r from-blue-400 to-blue-600 text-white font-bold rounded-lg hover:shadow-lg transition">
+                            Simpan Akun
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- MOBILE OVERLAY -->
+    <div id="overlay" class="hidden fixed inset-0 bg-black bg-opacity-50 md:hidden z-20" onclick="toggleSidebar()"></div>
+
+    <!-- JavaScript: Sidebar Toggle & Auto-Calculate Balance -->
+    <script>
+        // Toggle Sidebar untuk Mobile
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            sidebar.classList.toggle('-translate-x-full');
+            overlay.classList.toggle('hidden');
+        }
+
+        document.getElementById('sidebarToggle').addEventListener('click', toggleSidebar);
+
+        // Format Number to Currency (IDR)
+        function formatCurrency(num) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+        // Parse input value (handle empty/non-numeric)
+        function parseValue(val) {
+            const num = parseInt(val) || 0;
+            return Math.max(0, num);
+        }
+
+        // Calculate & Update Totals
+        function updateTotals() {
+            const debitInputs = document.querySelectorAll('.debit-input');
+            const kreditInputs = document.querySelectorAll('.kredit-input');
+
+            let totalDebit = 0;
+            let totalKredit = 0;
+
+            // Sum all debit values
+            debitInputs.forEach(input => {
+                totalDebit += parseValue(input.value);
+            });
+
+            // Sum all kredit values
+            kreditInputs.forEach(input => {
+                totalKredit += parseValue(input.value);
+            });
+
+            // Update total display
+            document.getElementById('totalDebit').textContent = formatCurrency(totalDebit);
+            document.getElementById('totalKredit').textContent = formatCurrency(totalKredit);
+
+            // Update balance status
+            const statusBadge = document.getElementById('statusBadge');
+            if (totalDebit === totalKredit && totalDebit > 0) {
+                statusBadge.innerHTML = '✓ Seimbang';
+                statusBadge.className = 'inline-block px-4 py-2 bg-green-100 text-green-700 font-bold rounded-full text-sm';
+            } else if (totalDebit !== totalKredit) {
+                const selisih = Math.abs(totalDebit - totalKredit);
+                statusBadge.innerHTML = `✗ Tidak Seimbang (Selisih: Rp ${formatCurrency(selisih)})`;
+                statusBadge.className = 'inline-block px-4 py-2 bg-red-100 text-red-700 font-bold rounded-full text-sm';
+            }
+        }
+
+        // Add event listeners to all input fields
+        document.querySelectorAll('.table-input').forEach(input => {
+            input.addEventListener('input', updateTotals);
+            input.addEventListener('change', updateTotals);
+        });
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', updateTotals);
+
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // ===== MODAL TAMBAH AKUN BARU =====
+        const modal = document.getElementById('modalTambahAkun');
+        const btnTambahAkun = document.getElementById('btnTambahAkun');
+        const btnCloseModal = document.getElementById('btnCloseModal');
+        const btnBatalModal = document.getElementById('btnBatalModal');
+        const formTambahAkun = document.getElementById('formTambahAkun');
+
+        // Fungsi: Buka Modal
+        function openModal() {
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Fungsi: Tutup Modal
+        function closeModal() {
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+            formTambahAkun.reset();
+        }
+
+        // Event Listeners: Buka Modal
+        btnTambahAkun.addEventListener('click', openModal);
+
+        // Event Listeners: Tutup Modal
+        btnCloseModal.addEventListener('click', closeModal);
+        btnBatalModal.addEventListener('click', closeModal);
+
+        // Tutup modal saat klik overlay
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Fungsi: Tambah Akun ke Tabel
+        formTambahAkun.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const kodeAkun = document.getElementById('inputKodeAkun').value.trim();
+            const namaAkun = document.getElementById('inputNamaAkun').value.trim();
+            const posisiSaldo = document.getElementById('selectPosisiSaldo').value;
+
+            // Validasi input kosong
+            if (!kodeAkun || !namaAkun || !posisiSaldo) {
+                alert('Semua field harus diisi!');
+                return;
+            }
+
+            // Buat row baru
+            const newRow = document.createElement('tr');
+            newRow.className = 'hover:bg-gray-50 transition';
+
+            const debitValue = posisiSaldo === 'debit' ? '0' : '0';
+            const kreditValue = posisiSaldo === 'kredit' ? '0' : '0';
+
+            newRow.innerHTML = `
+                <td class="px-6 py-4 text-sm font-semibold text-gray-700">${kodeAkun}</td>
+                <td class="px-6 py-4 text-sm text-gray-700">${namaAkun}</td>
+                <td class="px-6 py-4">
+                    <input type="number" placeholder="0" class="table-input debit-input" value="${debitValue}" data-akun="${namaAkun}">
+                </td>
+                <td class="px-6 py-4">
+                    <input type="number" placeholder="0" class="table-input kredit-input" value="${kreditValue}" data-akun="${namaAkun}">
+                </td>
+            `;
+
+            // Tambahkan ke tbody
+            const tbody = document.getElementById('tabelNeraca');
+            tbody.appendChild(newRow);
+
+            // Tambah event listener ke input-input baru
+            const newInputs = newRow.querySelectorAll('.table-input');
+            newInputs.forEach(input => {
+                input.addEventListener('input', updateTotals);
+                input.addEventListener('change', updateTotals);
+            });
+
+            // Update totals
+            updateTotals();
+
+            // Tutup modal dan reset form
+            closeModal();
+
+            // Tampilkan pesan sukses (opsional)
+            alert(`Akun "${namaAkun}" (${kodeAkun}) berhasil ditambahkan!`);
+        });
+    </script>
+</body>
+</html>

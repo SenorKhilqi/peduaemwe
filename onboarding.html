@@ -13,24 +13,24 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         .gradient-hero {
-            background: linear-gradient(135deg, #0EA5E9 0%, #06B6D4 100%);
+            background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
         }
         .card-hover {
             transition: all 0.3s ease;
         }
         .card-hover:hover {
             transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(6, 182, 212, 0.15);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15);
         }
         .card-selected {
-            border: 3px solid #06B6D4;
-            background: rgba(6, 182, 212, 0.05);
+            border: 3px solid #3B82F6;
+            background: rgba(59, 130, 246, 0.05);
         }
         .step-indicator {
             counter-increment: step-counter;
         }
         .step-number {
-            @apply w-10 h-10 bg-gradient-to-br from-cyan-400 to-blue-500 text-white rounded-full flex items-center justify-center font-bold;
+            @apply w-10 h-10 bg-gradient-to-br from-blue-400 to-blue-600 text-white rounded-full flex items-center justify-center font-bold;
         }
     </style>
 </head>
@@ -40,15 +40,13 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <div class="flex items-center gap-2">
-                    <div class="w-10 h-10 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-lg flex items-center justify-center">
+                    <div class="w-10 h-10 bg-gradient-to-br from-blue-400 to-blue-600 rounded-lg flex items-center justify-center">
                         <span class="text-white font-bold text-lg">₽</span>
                     </div>
                     <span class="font-bold text-xl text-gray-900">Web Ledger</span>
                 </div>
                 <div class="flex items-center gap-4">
-                    <a href="index.html" class="text-gray-700 hover:text-cyan-500 transition">Kembali</a>
-                    <a href="dashboard.html" class="px-6 py-2 rounded-lg bg-gradient-to-r from-cyan-400 to-blue-500 text-white font-semibold hover:shadow-lg transition">
-                        Dashboard
+                    <a href="index.html" class="text-gray-700 hover:text-blue-600 transition">Kembali</a>
                     </a>
                 </div>
             </div>
@@ -56,12 +54,12 @@
     </nav>
 
     <!-- STEP PROGRESS -->
-    <div class="bg-gradient-to-r from-cyan-50 to-blue-50 px-4 py-8">
+    <div class="bg-gradient-to-r from-blue-50 to-blue-50 px-4 py-8">
         <div class="max-w-4xl mx-auto">
             <div class="flex items-center justify-between">
                 <!-- Step 1: Pilih Tipe UMKM (Active) -->
                 <div class="flex flex-col items-center flex-1">
-                    <div class="step-number bg-gradient-to-br from-cyan-400 to-blue-500">1</div>
+                    <div class="step-number bg-gradient-to-br from-blue-400 to-blue-600">1</div>
                     <p class="text-sm font-semibold text-gray-900 mt-2">Tipe UMKM</p>
                 </div>
 
@@ -98,7 +96,7 @@
                 <!-- Card 1: Jasa -->
                 <div class="card-hover bg-white rounded-2xl shadow-lg p-8 border-2 border-transparent cursor-pointer umkm-card" data-type="jasa">
                     <div class="mb-6">
-                        <div class="w-16 h-16 bg-gradient-to-br from-cyan-100 to-blue-100 rounded-xl flex items-center justify-center text-cyan-600 mb-4">
+                        <div class="w-16 h-16 bg-gradient-to-br from-blue-100 to-blue-100 rounded-xl flex items-center justify-center text-blue-600 mb-4">
                             <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
                             </svg>
@@ -126,9 +124,9 @@
                             Client management
                         </li>
                     </ul>
-                    <button class="w-full px-4 py-3 bg-cyan-50 text-cyan-600 font-bold rounded-lg border-2 border-cyan-200 hover:bg-cyan-100 transition select-btn">
+                    <a href="/dagang/dashboard.html" class="block w-full text-center px-4 py-3 bg-blue-50 text-blue-600 font-bold rounded-lg border-2 border-blue-200 hover:bg-blue-100 transition select-btn">
                         Pilih Tipe Ini
-                    </button>
+                        </a>
                 </div>
 
                 <!-- Card 2: Dagang -->
@@ -162,9 +160,9 @@
                             Laporan penjualan
                         </li>
                     </ul>
-                    <button class="w-full px-4 py-3 bg-gray-50 text-gray-600 font-bold rounded-lg border-2 border-gray-200 hover:bg-gray-100 transition select-btn">
+                    <a href="/dagang/dashboard.html" class="block w-full text-center px-4 py-3 bg-blue-50 text-blue-600 font-bold rounded-lg border-2 border-blue-200 hover:bg-blue-100 transition select-btn">
                         Pilih Tipe Ini
-                    </button>
+                        </a>
                 </div>
 
                 <!-- Card 3: Manufaktur -->
@@ -198,15 +196,15 @@
                             Efisiensi produksi
                         </li>
                     </ul>
-                    <button class="w-full px-4 py-3 bg-gray-50 text-gray-600 font-bold rounded-lg border-2 border-gray-200 hover:bg-gray-100 transition select-btn">
+                    <a href="/dagang/dashboard.html" class="block w-full text-center px-4 py-3 bg-blue-50 text-blue-600 font-bold rounded-lg border-2 border-blue-200 hover:bg-blue-100 transition select-btn">
                         Pilih Tipe Ini
-                    </button>
+                        </a>
                 </div>
             </div>
         </div>
 
         <!-- Call to Action -->
-        <div class="bg-gradient-to-r from-cyan-50 to-blue-50 rounded-2xl p-8 text-center">
+        <div class="bg-gradient-to-r from-blue-50 to-blue-50 rounded-2xl p-8 text-center">
             <h2 class="text-2xl font-bold text-gray-900 mb-4">Belum tahu mau pilih tipe mana?</h2>
             <p class="text-gray-600 mb-6">Anda bisa mengubahnya kapan saja di pengaturan akun setelah proses onboarding.</p>
             <button class="px-6 py-3 bg-gradient-to-r from-cyan-400 to-blue-500 text-white font-bold rounded-lg hover:shadow-lg transition" onclick="skipOnboarding()">
@@ -235,7 +233,7 @@
                 // Remove selection dari semua card
                 document.querySelectorAll('.umkm-card').forEach(c => {
                     c.classList.remove('card-selected');
-                    c.querySelector('.select-btn').classList.remove('bg-cyan-100', 'text-cyan-600', 'border-cyan-400');
+                    c.querySelector('.select-btn').classList.remove('bg-blue-100', 'text-blue-600', 'border-blue-400');
                     c.querySelector('.select-btn').classList.add('bg-gray-50', 'text-gray-600', 'border-gray-200');
                 });
 
@@ -243,7 +241,7 @@
                 this.classList.add('card-selected');
                 const btn = this.querySelector('.select-btn');
                 btn.classList.remove('bg-gray-50', 'text-gray-600', 'border-gray-200');
-                btn.classList.add('bg-cyan-100', 'text-cyan-600', 'border-cyan-400');
+                btn.classList.add('bg-blue-100', 'text-blue-600', 'border-blue-400');
 
                 // Store tipe yang dipilih
                 selectedType = this.dataset.type;

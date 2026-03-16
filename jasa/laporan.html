@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laporan - Web Ledger SAK EMKM</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .sidebar-active {
+            background-color: rgba(6, 182, 212, 0.1);
+            border-left: 4px solid #06B6D4;
+        }
+        .report-table {
+            width: 100%;
+        }
+        .report-header {
+            background: linear-gradient(135deg, #E0F2FE 0%, #CFFAFE 100%);
+        }
+        .report-footer {
+            background: linear-gradient(135deg, #CFFAFE 0%, #CCF0F5 100%);
+        }
+        .tab-active {
+            border-bottom: 3px solid #06B6D4;
+            color: #06B6D4;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- HEADER -->
+    <header class="bg-white shadow-md sticky top-0 z-40">
+        <div class="flex items-center justify-between px-6 py-4">
+            <div class="flex items-center gap-3">
+                <button id="sidebarToggle" class="md:hidden p-2 hover:bg-gray-100 rounded-lg">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+                <h1 class="text-2xl font-bold text-gray-900">Laporan</h1>
+            </div>
+            <div class="flex items-center gap-4">
+                <!-- Export & Print Buttons -->
+                <button class="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2m0 0v-8m0 8l-6-4m6 4l6-4"></path>
+                    </svg>
+                    Export
+                </button>
+                <button class="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-400 to-blue-600 text-white rounded-lg hover:shadow-lg transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path>
+                    </svg>
+                    Cetak
+                </button>
+                <!-- User Profile -->
+                <div class="flex items-center gap-3 border-l pl-4">
+                    <div class="text-right hidden sm:block">
+                        <p class="text-sm font-semibold text-gray-900">PT. Maju Jaya</p>
+                        <p class="text-xs text-gray-500">Pemilik</p>
+                    </div>
+                    <div class="w-10 h-10 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center text-white font-bold">
+                        MJ
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="flex h-screen overflow-hidden">
+        <!-- SIDEBAR NAVIGATION -->
+        <aside id="sidebar" class="w-64 bg-white shadow-lg overflow-y-auto transition-all duration-300 -translate-x-full md:translate-x-0 absolute md:relative h-full md:h-auto z-30 md:z-0">
+            <nav class="px-4 py-6">
+                <div class="flex items-center gap-2 mb-8 px-2">
+                    <div class="w-8 h-8 bg-gradient-to-br from-blue-400 to-blue-600 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold">₽</span>
+                    </div>
+                    <span class="font-bold text-lg text-gray-900">Web Ledger</span>
+                </div>
+
+                <!-- Menu Items -->
+                <div class="space-y-2">
+                    <a href="dashboard.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
+                        </svg>
+                        <span class="font-medium">Dashboard</span>
+                    </a>
+
+                    <a href="neraca-saldo-awal.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                        <span class="font-medium">Neraca Saldo Awal</span>
+                    </a>
+
+                    <a href="transaksi.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <span class="font-medium">Transaksi</span>
+                    </a>
+
+                    <a href="laporan.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-blue-600 sidebar-active hover:bg-gray-100 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                        <span class="font-medium">Laporan</span>
+                    </a>
+
+                    <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C6.228 6.228 2 10.228 2 15s4.228 8.772 10 8.772 10-4.228 10-8.772c0-4.772-4.228-8.747-10-8.747z"></path>
+                        </svg>
+                        <span class="font-medium">Edukasi</span>
+                    </a>
+
+                    <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                        <span class="font-medium">Pengaturan</span>
+                    </a>
+                </div>
+
+                <hr class="my-6 border-gray-200">
+
+                <a href="index.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-600 transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                    </svg>
+                    <span class="font-medium">Keluar</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="flex-1 overflow-auto p-4 md:p-8">
+            <!-- Page Header -->
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-gray-900 mb-2">Laporan Keuangan</h2>
+                <p class="text-gray-600">Laporan keuangan bulanan sesuai SAK EMKM</p>
+            </div>
+
+            <!-- Filter & Period Selection -->
+            <div class="flex flex-col sm:flex-row gap-4 mb-8">
+                <div class="flex-1">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Periode Laporan</label>
+                    <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
+                        <option>Januari 2024</option>
+                        <option selected>Februari 2024</option>
+                        <option>Maret 2024</option>
+                        <option>Q1 2024</option>
+                        <option>Tahunan 2024</option>
+                    </select>
+                </div>
+                <div class="flex items-end">
+                    <button class="px-6 py-2 bg-gradient-to-r from-blue-400 to-blue-600 text-white font-semibold rounded-lg hover:shadow-lg transition">
+                        Buat Laporan
+                    </button>
+                </div>
+            </div>
+
+            <!-- TAB NAVIGATION -->
+            <div class="flex border-b border-gray-200 mb-8 bg-white rounded-t-lg">
+                <button class="px-6 py-4 font-semibold text-blue-600 tab-active hover:bg-blue-50 transition" id="tab-labarugi">
+                    Laporan Laba Rugi
+                </button>
+                <button class="px-6 py-4 font-semibold text-gray-600 hover:bg-gray-50 transition" id="tab-neraca">
+                    Neraca
+                </button>
+                <button class="px-6 py-4 font-semibold text-gray-600 hover:bg-gray-50 transition" id="tab-cash-flow">
+                    Arus Kas
+                </button>
+            </div>
+
+            <!-- LAPORAN LABA RUGI TAB -->
+            <div class="tab-content bg-white rounded-b-lg shadow-md p-8 mb-8" id="content-labarugi">
+                <div class="mb-8">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">PT. MAJU JAYA</h3>
+                    <p class="text-gray-600">Laporan Laba Rugi Periode: Februari 2024</p>
+                </div>
+
+                <!-- Table Structure -->
+                <table class="report-table">
+                    <tbody>
+                        <!-- PENDAPATAN SECTION -->
+                        <tr class="report-header">
+                            <td class="px-4 py-3 font-bold text-gray-900">PENDAPATAN USAHA</td>
+                            <td class="px-4 py-3 text-right"></td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="px-4 py-3 text-gray-700">Pendapatan Penjualan Barang</td>
+                            <td class="px-4 py-3 text-right text-gray-900 font-semibold">Rp 52.5 jt</td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="px-4 py-3 text-gray-700">Pendapatan Jasa Layanan</td>
+                            <td class="px-4 py-3 text-right text-gray-900 font-semibold">Rp 8.2 jt</td>
+                        </tr>
+                        <tr class="bg-gray-50 border-b font-bold">
+                            <td class="px-4 py-3 text-gray-900">TOTAL PENDAPATAN</td>
+                            <td class="px-4 py-3 text-right text-gray-900">Rp 60.7 jt</td>
+                        </tr>
+
+                        <!-- BEBAN OPERASIONAL -->
+                        <tr class="report-header mt-6">
+                            <td class="px-4 py-3 font-bold text-gray-900">BEBAN OPERASIONAL</td>
+                            <td class="px-4 py-3 text-right"></td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="px-4 py-3 text-gray-700">&nbsp;&nbsp;Gaji & Upah Karyawan</td>
+                            <td class="px-4 py-3 text-right text-gray-900">Rp 12.0 jt</td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="px-4 py-3 text-gray-700">&nbsp;&nbsp;Biaya Pembelian Barang</td>
+                            <td class="px-4 py-3 text-right text-gray-900">Rp 18.5 jt</td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="px-4 py-3 text-gray-700">&nbsp;&nbsp;Biaya Listrik & Air</td>
+                            <td class="px-4 py-3 text-right text-gray-900">Rp 1.8 jt</td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="px-4 py-3 text-gray-700">&nbsp;&nbsp;Biaya Pemasaran & Promosi</td>
+                            <td class="px-4 py-3 text-right text-gray-900">Rp 2.5 jt</td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="px-4 py-3 text-gray-700">&nbsp;&nbsp;Biaya Transportasi & Logistics</td>
+                            <td class="px-4 py-3 text-right text-gray-900">Rp 3.2 jt</td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="px-4 py-3 text-gray-700">&nbsp;&nbsp;Biaya Administrasi Lainnya</td>
+                            <td class="px-4 py-3 text-right text-gray-900">Rp 1.8 jt</td>
+                        </tr>
+                        <tr class="bg-gray-50 border-b font-bold">
+                            <td class="px-4 py-3 text-gray-900">TOTAL BEBAN OPERASIONAL</td>
+                            <td class="px-4 py-3 text-right text-gray-900">Rp 39.8 jt</td>
+                        </tr>
+
+                        <!-- HASIL USAHA -->
+                        <tr class="report-footer font-bold text-lg">
+                            <td class="px-4 py-4 text-gray-900">LABA USAHA</td>
+                            <td class="px-4 py-4 text-right text-green-600">Rp 20.9 jt</td>
+                        </tr>
+
+                        <!-- BIAYA LAIN-LAIN -->
+                        <tr class="report-header mt-6">
+                            <td class="px-4 py-3 font-bold text-gray-900">BIAYA LAIN-LAIN</td>
+                            <td class="px-4 py-3 text-right"></td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="px-4 py-3 text-gray-700">&nbsp;&nbsp;Bunga Pinjaman</td>
+                            <td class="px-4 py-3 text-right text-gray-900">Rp 0.5 jt</td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="px-4 py-3 text-gray-700">&nbsp;&nbsp;Biaya Lain-lain</td>
+                            <td class="px-4 py-3 text-right text-gray-900">Rp 0.2 jt</td>
+                        </tr>
+                        <tr class="bg-gray-50 border-b font-bold">
+                            <td class="px-4 py-3 text-gray-900">TOTAL BIAYA LAIN-LAIN</td>
+                            <td class="px-4 py-3 text-right text-gray-900">Rp 0.7 jt</td>
+                        </tr>
+
+                        <!-- LABA BERSIH -->
+                        <tr class="bg-green-50 font-bold text-xl">
+                            <td class="px-4 py-4 text-gray-900">LABA BERSIH SEBELUM PAJAK</td>
+                            <td class="px-4 py-4 text-right text-green-600">Rp 20.2 jt</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- Summary Card -->
+                <div class="grid md:grid-cols-3 gap-4 mt-8">
+                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                        <p class="text-gray-600 text-sm font-medium">Total Pendapatan</p>
+                        <p class="text-2xl font-bold text-blue-600 mt-2">Rp 60.7 jt</p>
+                    </div>
+                    <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+                        <p class="text-gray-600 text-sm font-medium">Total Beban</p>
+                        <p class="text-2xl font-bold text-red-600 mt-2">Rp 40.5 jt</p>
+                    </div>
+                    <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                        <p class="text-gray-600 text-sm font-medium">Laba Bersih</p>
+                        <p class="text-2xl font-bold text-green-600 mt-2">Rp 20.2 jt</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NERACA TAB (Hidden by default) -->
+            <div class="tab-content hidden bg-white rounded-b-lg shadow-md p-8 mb-8" id="content-neraca">
+                <div class="mb-8">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">PT. MAJU JAYA</h3>
+                    <p class="text-gray-600">Neraca (Balance Sheet) per: 29 Februari 2024</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- AKTIVA SECTION -->
+                    <div>
+                        <table class="report-table">
+                            <tbody>
+                                <tr class="report-header">
+                                    <td class="px-4 py-3 font-bold text-gray-900">AKTIVA (ASET)</td>
+                                    <td class="px-4 py-3 text-right"></td>
+                                </tr>
+                                <tr class="border-b">
+                                    <td class="px-4 py-3 text-gray-700">Kas & Bank</td>
+                                    <td class="px-4 py-3 text-right text-gray-900">Rp 45.2 jt</td>
+                                </tr>
+                                <tr class="border-b">
+                                    <td class="px-4 py-3 text-gray-700">Piutang Dagang</td>
+                                    <td class="px-4 py-3 text-right text-gray-900">Rp 8.5 jt</td>
+                                </tr>
+                                <tr class="border-b">
+                                    <td class="px-4 py-3 text-gray-700">Persediaan</td>
+                                    <td class="px-4 py-3 text-right text-gray-900">Rp 22.0 jt</td>
+                                </tr>
+                                <tr class="bg-gray-50 border-b font-bold">
+                                    <td class="px-4 py-3 text-gray-900">Total Aktiva Lancar</td>
+                                    <td class="px-4 py-3 text-right text-gray-900">Rp 75.7 jt</td>
+                                </tr>
+                                <tr class="border-b mt-4">
+                                    <td class="px-4 py-3 text-gray-700">Peralatan & Mesin</td>
+                                    <td class="px-4 py-3 text-right text-gray-900">Rp 35.0 jt</td>
+                                </tr>
+                                <tr class="border-b">
+                                    <td class="px-4 py-3 text-gray-700">Akumulasi Penyusutan</td>
+                                    <td class="px-4 py-3 text-right text-red-600">(Rp 5.0 jt)</td>
+                                </tr>
+                                <tr class="bg-gray-50 font-bold">
+                                    <td class="px-4 py-3 text-gray-900">Total Aktiva Tetap</td>
+                                    <td class="px-4 py-3 text-right text-gray-900">Rp 30.0 jt</td>
+                                </tr>
+                                <tr class="bg-blue-50 font-bold text-lg border-t-2 border-blue-300">
+                                    <td class="px-4 py-4 text-gray-900">TOTAL AKTIVA</td>
+                                    <td class="px-4 py-4 text-right text-blue-600">Rp 105.7 jt</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- PASSIVA & EKUITAS SECTION -->
+                    <div>
+                        <table class="report-table">
+                            <tbody>
+                                <tr class="report-header">
+                                    <td class="px-4 py-3 font-bold text-gray-900">PASSIVA & EKUITAS</td>
+                                    <td class="px-4 py-3 text-right"></td>
+                                </tr>
+                                <tr class="border-b">
+                                    <td class="px-4 py-3 text-gray-700">Utang Dagang</td>
+                                    <td class="px-4 py-3 text-right text-gray-900">Rp 18.0 jt</td>
+                                </tr>
+                                <tr class="border-b">
+                                    <td class="px-4 py-3 text-gray-700">Utang Bank (Pendek)</td>
+                                    <td class="px-4 py-3 text-right text-gray-900">Rp 12.0 jt</td>
+                                </tr>
+                                <tr class="border-b">
+                                    <td class="px-4 py-3 text-gray-700">Beban Bayar Diakui</td>
+                                    <td class="px-4 py-3 text-right text-gray-900">Rp 3.5 jt</td>
+                                </tr>
+                                <tr class="bg-gray-50 border-b font-bold">
+                                    <td class="px-4 py-3 text-gray-900">Total Passiva Lancar</td>
+                                    <td class="px-4 py-3 text-right text-gray-900">Rp 33.5 jt</td>
+                                </tr>
+                                <tr class="border-b mt-4">
+                                    <td class="px-4 py-3 text-gray-700">Utang Bank (Panjang)</td>
+                                    <td class="px-4 py-3 text-right text-gray-900">Rp 20.0 jt</td>
+                                </tr>
+                                <tr class="bg-gray-50 font-bold">
+                                    <td class="px-4 py-3 text-gray-900">Total Passiva Jangka Panjang</td>
+                                    <td class="px-4 py-3 text-right text-gray-900">Rp 20.0 jt</td>
+                                </tr>
+
+                                <tr class="report-header mt-6">
+                                    <td class="px-4 py-3 font-bold text-gray-900">EKUITAS (MODAL)</td>
+                                    <td class="px-4 py-3 text-right"></td>
+                                </tr>
+                                <tr class="border-b">
+                                    <td class="px-4 py-3 text-gray-700">Modal Awal</td>
+                                    <td class="px-4 py-3 text-right text-gray-900">Rp 45.0 jt</td>
+                                </tr>
+                                <tr class="border-b">
+                                    <td class="px-4 py-3 text-gray-700">Laba Tahun Berjalan</td>
+                                    <td class="px-4 py-3 text-right text-gray-900">Rp 20.2 jt</td>
+                                </tr>
+                                <tr class="bg-green-50 font-bold">
+                                    <td class="px-4 py-3 text-gray-900">Total Ekuitas</td>
+                                    <td class="px-4 py-3 text-right text-green-600">Rp 65.2 jt</td>
+                                </tr>
+
+                                <tr class="bg-blue-50 font-bold text-lg border-t-2 border-blue-300">
+                                    <td class="px-4 py-4 text-gray-900">TOTAL PASSIVA & EKUITAS</td>
+                                    <td class="px-4 py-4 text-right text-blue-600">Rp 118.7 jt</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Note -->
+                <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mt-8">
+                    <p class="text-sm text-yellow-800"><strong>Catatan:</strong> Laporan ini merupakan draft dan belum diaudit. Untuk keperluan formal, silakan konsultasikan dengan akuntan profesional.</p>
+                </div>
+            </div>
+
+            <!-- ARUS KAS TAB (Hidden by default) -->
+            <div class="tab-content hidden bg-white rounded-b-lg shadow-md p-8 mb-8" id="content-cash-flow">
+                <div class="mb-8">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">PT. MAJU JAYA</h3>
+                    <p class="text-gray-600">Laporan Arus Kas (Cash Flow) Periode: Februari 2024</p>
+                </div>
+
+                <table class="report-table">
+                    <tbody>
+                        <tr class="report-header">
+                            <td class="px-4 py-3 font-bold text-gray-900">ARUS KAS DARI AKTIVITAS OPERASIONAL</td>
+                            <td class="px-4 py-3 text-right"></td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="px-4 py-3 text-gray-700">Kas dari Penjualan</td>
+                            <td class="px-4 py-3 text-right text-gray-900 font-semibold">Rp 56.0 jt</td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="px-4 py-3 text-gray-700">Kas untuk Pembelian Barang</td>
+                            <td class="px-4 py-3 text-right text-red-600">- Rp 18.0 jt</td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="px-4 py-3 text-gray-700">Kas untuk Gaji & Upah</td>
+                            <td class="px-4 py-3 text-right text-red-600">- Rp 12.0 jt</td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="px-4 py-3 text-gray-700">Kas untuk Biaya Operasional</td>
+                            <td class="px-4 py-3 text-right text-red-600">- Rp 8.3 jt</td>
+                        </tr>
+                        <tr class="bg-gray-50 border-b font-bold">
+                            <td class="px-4 py-3 text-gray-900">Arus Kas Operasional Bersih</td>
+                            <td class="px-4 py-3 text-right text-green-600">Rp 17.7 jt</td>
+                        </tr>
+
+                        <tr class="report-header mt-6">
+                            <td class="px-4 py-3 font-bold text-gray-900">ARUS KAS DARI AKTIVITAS INVESTASI</td>
+                            <td class="px-4 py-3 text-right"></td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="px-4 py-3 text-gray-700">Pembelian Peralatan</td>
+                            <td class="px-4 py-3 text-right text-red-600">- Rp 5.0 jt</td>
+                        </tr>
+                        <tr class="bg-gray-50 border-b font-bold">
+                            <td class="px-4 py-3 text-gray-900">Arus Kas Investasi Bersih</td>
+                            <td class="px-4 py-3 text-right text-red-600">- Rp 5.0 jt</td>
+                        </tr>
+
+                        <tr class="report-header mt-6">
+                            <td class="px-4 py-3 font-bold text-gray-900">ARUS KAS DARI AKTIVITAS PENDANAAN</td>
+                            <td class="px-4 py-3 text-right"></td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="px-4 py-3 text-gray-700">Pembayaran Utang Bank</td>
+                            <td class="px-4 py-3 text-right text-red-600">- Rp 3.0 jt</td>
+                        </tr>
+                        <tr class="bg-gray-50 border-b font-bold">
+                            <td class="px-4 py-3 text-gray-900">Arus Kas Pendanaan Bersih</td>
+                            <td class="px-4 py-3 text-right text-red-600">- Rp 3.0 jt</td>
+                        </tr>
+
+                        <tr class="bg-blue-50 font-bold text-lg border-t-2 border-blue-300">
+                            <td class="px-4 py-4 text-gray-900">PERUBAHAN KAS BERSIH</td>
+                            <td class="px-4 py-4 text-right text-green-600">Rp 9.7 jt</td>
+                        </tr>
+                        <tr>
+                            <td class="px-4 py-3 text-gray-700">Saldo Kas Awal Periode</td>
+                            <td class="px-4 py-3 text-right text-gray-900">Rp 35.5 jt</td>
+                        </tr>
+                        <tr class="bg-green-50 font-bold text-lg">
+                            <td class="px-4 py-4 text-gray-900">SALDO KAS AKHIR PERIODE</td>
+                            <td class="px-4 py-4 text-right text-green-600">Rp 45.2 jt</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <!-- MOBILE OVERLAY -->
+    <div id="overlay" class="hidden fixed inset-0 bg-black bg-opacity-50 md:hidden z-20" onclick="toggleSidebar()"></div>
+
+    <!-- JavaScript untuk Tab & Sidebar Toggle -->
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            sidebar.classList.toggle('-translate-x-full');
+            overlay.classList.toggle('hidden');
+        }
+
+        document.getElementById('sidebarToggle').addEventListener('click', toggleSidebar);
+
+        // Tab switching functionality
+        document.getElementById('tab-labarugi').addEventListener('click', function() {
+            switchTab('labarugi');
+        });
+
+        document.getElementById('tab-neraca').addEventListener('click', function() {
+            switchTab('neraca');
+        });
+
+        document.getElementById('tab-cash-flow').addEventListener('click', function() {
+            switchTab('cash-flow');
+        });
+
+        function switchTab(tabName) {
+            // Hide all tabs
+            document.getElementById('content-labarugi').classList.add('hidden');
+            document.getElementById('content-neraca').classList.add('hidden');
+            document.getElementById('content-cash-flow').classList.add('hidden');
+
+            // Remove active class from all tabs
+            document.getElementById('tab-labarugi').classList.remove('tab-active');
+            document.getElementById('tab-neraca').classList.remove('tab-active');
+            document.getElementById('tab-cash-flow').classList.remove('tab-active');
+
+            // Show selected tab
+            document.getElementById('content-' + tabName).classList.remove('hidden');
+            document.getElementById('tab-' + tabName).classList.add('tab-active');
+        }
+
+        // Initialize Lucide Icons
+        lucide.createIcons();
+    </script>
+</body>
+</html>
