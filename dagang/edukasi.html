@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edukasi - Web Ledger SAK EMKM</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .sidebar-active {
+            background-color: rgba(59, 130, 246, 0.1);
+            border-left: 4px solid #3B82F6;
+        }
+        .module-card {
+            transition: all 0.3s ease;
+        }
+        .module-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        .video-placeholder {
+            background: linear-gradient(135deg, #374151 0%, #1F2937 100%);
+        }
+        .accordion-item {
+            border-bottom: 1px solid #E5E7EB;
+        }
+        .accordion-item:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- HEADER -->
+    <header class="bg-white shadow-md sticky top-0 z-40">
+        <div class="flex items-center justify-between px-6 py-4">
+            <div class="flex items-center gap-3">
+                <button id="sidebarToggle" class="md:hidden p-2 hover:bg-gray-100 rounded-lg">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+                <h1 class="text-2xl font-bold text-gray-900">Edukasi</h1>
+            </div>
+            <div class="flex items-center gap-4">
+                <!-- User Profile -->
+                <div class="flex items-center gap-3 border-l pl-4">
+                    <div class="text-right hidden sm:block">
+                        <p class="text-sm font-semibold text-gray-900">PT. Maju Jaya</p>
+                        <p class="text-xs text-gray-500">Pemilik</p>
+                    </div>
+                    <div class="w-10 h-10 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center text-white font-bold">
+                        MJ
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="flex h-screen overflow-hidden">
+        <!-- SIDEBAR NAVIGATION -->
+        <aside id="sidebar" class="w-64 bg-white shadow-lg overflow-y-auto transition-all duration-300 -translate-x-full md:translate-x-0 absolute md:relative h-full md:h-auto z-30 md:z-0">
+            <nav class="px-4 py-6">
+                <div class="flex items-center gap-2 mb-8 px-2">
+                    <div class="w-8 h-8 bg-gradient-to-br from-blue-400 to-blue-600 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold">₽</span>
+                    </div>
+                    <span class="font-bold text-lg text-gray-900">Web Ledger</span>
+                </div>
+
+                <!-- Menu Items -->
+                <div class="space-y-2">
+                    <a href="dashboard.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
+                        </svg>
+                        <span class="font-medium">Dashboard</span>
+                    </a>
+
+                    <a href="neraca-saldo-awal.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                        <span class="font-medium">Neraca Saldo Awal</span>
+                    </a>
+
+                    <a href="transaksi.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <span class="font-medium">Transaksi</span>
+                    </a>
+
+                    <a href="laporan.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                        <span class="font-medium">Laporan</span>
+                    </a>
+
+                    <a href="edukasi.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-blue-600 sidebar-active hover:bg-gray-100 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C6.228 6.228 2 10.228 2 15s4.228 8.772 10 8.772 10-4.228 10-8.772c0-4.772-4.228-8.747-10-8.747z"></path>
+                        </svg>
+                        <span class="font-medium">Edukasi</span>
+                    </a>
+
+                    <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                        <span class="font-medium">Pengaturan</span>
+                    </a>
+                </div>
+
+                <!-- Divider -->
+                <hr class="my-6 border-gray-200">
+
+                <!-- Logout -->
+                <a href="index.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-600 transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                    </svg>
+                    <span class="font-medium">Keluar</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="flex-1 overflow-auto p-4 md:p-8">
+            <!-- Header Section -->
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-gray-900 mb-2">Pusat Edukasi & Bantuan 📚</h2>
+                <p class="text-gray-600 mb-6">Pelajari dasar akuntansi SAK EMKM dan cara memaksimalkan aplikasi ini</p>
+
+                <!-- Search Bar -->
+                <div class="flex items-center gap-2 bg-white rounded-lg shadow-sm border border-gray-200 px-4 py-3 max-w-md">
+                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                    <input type="text" placeholder="Cari topik edukasi... (misal: cara catat retur)" class="flex-1 outline-none text-gray-700">
+                </div>
+            </div>
+
+            <!-- Featured Content (Hero Video Section) -->
+            <div class="mb-12">
+                <div class="grid md:grid-cols-3 gap-6 items-start">
+                    <!-- Video Placeholder -->
+                    <div class="md:col-span-2">
+                        <div class="video-placeholder rounded-xl overflow-hidden shadow-lg h-64 md:h-80 flex items-center justify-center relative group cursor-pointer">
+                            <div class="absolute inset-0 bg-black bg-opacity-30 group-hover:bg-opacity-40 transition flex items-center justify-center">
+                                <div class="bg-blue-600 text-white rounded-full p-4 group-hover:scale-110 transition transform">
+                                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M8 5v14l11-7z"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Video Info -->
+                    <div class="flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-3">Webinar: Langkah Awal Pembukuan untuk Pemula</h3>
+                            <p class="text-gray-600 text-sm mb-4">Pelajari fundamental akuntansi sesuai SAK EMKM dalam waktu 30 menit. Cocok untuk yang baru memulai berbisnis.</p>
+                            <div class="flex items-center gap-2 text-sm text-gray-500 mb-6">
+                                <span class="flex items-center gap-1">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path>
+                                    </svg>
+                                    30 menit
+                                </span>
+                                <span>•</span>
+                                <span>Video Tutorial</span>
+                            </div>
+                        </div>
+                        <button class="w-full bg-blue-600 text-white font-semibold py-3 rounded-lg hover:bg-blue-700 transition flex items-center justify-center gap-2">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M8 5v14l11-7z"></path>
+                            </svg>
+                            Tonton Sekarang
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modul Pembelajaran Grid -->
+            <div class="mb-12">
+                <h3 class="text-2xl font-bold text-gray-900 mb-6">Kategori Modul Pembelajaran</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Module Card 1 -->
+                    <div class="module-card bg-white rounded-lg shadow-md p-6 border border-gray-200 hover:border-blue-300">
+                        <div class="mb-4">
+                            <div class="w-14 h-14 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                                <svg class="w-7 h-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C6.228 6.228 2 10.228 2 15s4.228 8.772 10 8.772 10-4.228 10-8.772c0-4.772-4.228-8.747-10-8.747z"></path>
+                                </svg>
+                            </div>
+                            <h4 class="text-lg font-bold text-gray-900 mb-2">1. Pengenalan SAK EMKM</h4>
+                            <p class="text-gray-600 text-sm leading-relaxed">Pahami konsep dasar Standar Akuntansi Keuangan Entitas Mikro, Kecil, dan Menengah, serta prinsip-prinsip penyusunan laporan keuangan yang sesuai regulasi Indonesia.</p>
+                        </div>
+                        <a href="#" class="text-blue-600 font-semibold text-sm hover:text-blue-700 hover:underline transition inline-flex items-center gap-1">
+                            Pelajari Modul →
+                        </a>
+                    </div>
+
+                    <!-- Module Card 2 -->
+                    <div class="module-card bg-white rounded-lg shadow-md p-6 border border-gray-200 hover:border-blue-300">
+                        <div class="mb-4">
+                            <div class="w-14 h-14 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+                                <svg class="w-7 h-7 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <h4 class="text-lg font-bold text-gray-900 mb-2">2. Panduan Input Transaksi</h4>
+                            <p class="text-gray-600 text-sm leading-relaxed">Langkah demi langkah mencatat berbagai jenis transaksi bisnis, mulai dari penjualan, pembelian, hingga biaya operasional dengan benar di aplikasi Web Ledger.</p>
+                        </div>
+                        <a href="#" class="text-blue-600 font-semibold text-sm hover:text-blue-700 hover:underline transition inline-flex items-center gap-1">
+                            Pelajari Modul →
+                        </a>
+                    </div>
+
+                    <!-- Module Card 3 -->
+                    <div class="module-card bg-white rounded-lg shadow-md p-6 border border-gray-200 hover:border-blue-300">
+                        <div class="mb-4">
+                            <div class="w-14 h-14 bg-amber-100 rounded-lg flex items-center justify-center mb-4">
+                                <svg class="w-7 h-7 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                                </svg>
+                            </div>
+                            <h4 class="text-lg font-bold text-gray-900 mb-2">3. Membaca Laporan Keuangan</h4>
+                            <p class="text-gray-600 text-sm leading-relaxed">Interpretasi dan analisis laporan laba rugi, neraca, dan arus kas untuk mengambil keputusan bisnis yang lebih baik berdasarkan data finansial yang akurat.</p>
+                        </div>
+                        <a href="#" class="text-blue-600 font-semibold text-sm hover:text-blue-700 hover:underline transition inline-flex items-center gap-1">
+                            Pelajari Modul →
+                        </a>
+                    </div>
+
+                    <!-- Module Card 4 -->
+                    <div class="module-card bg-white rounded-lg shadow-md p-6 border border-gray-200 hover:border-blue-300">
+                        <div class="mb-4">
+                            <div class="w-14 h-14 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
+                                <svg class="w-7 h-7 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                </svg>
+                            </div>
+                            <h4 class="text-lg font-bold text-gray-900 mb-2">4. Manajemen Kas & Bank</h4>
+                            <p class="text-gray-600 text-sm leading-relaxed">Strategi untuk mengelola arus kas, rekonsiliasi bank, dan cash flow forecasting agar bisnis Anda selalu memiliki likuiditas yang cukup untuk operasional.</p>
+                        </div>
+                        <a href="#" class="text-blue-600 font-semibold text-sm hover:text-blue-700 hover:underline transition inline-flex items-center gap-1">
+                            Pelajari Modul →
+                        </a>
+                    </div>
+
+                    <!-- Module Card 5 -->
+                    <div class="module-card bg-white rounded-lg shadow-md p-6 border border-gray-200 hover:border-blue-300">
+                        <div class="mb-4">
+                            <div class="w-14 h-14 bg-red-100 rounded-lg flex items-center justify-center mb-4">
+                                <svg class="w-7 h-7 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <h4 class="text-lg font-bold text-gray-900 mb-2">5. Pajak & Compliance</h4>
+                            <p class="text-gray-600 text-sm leading-relaxed">Pengurusan pajak penghasilan, PPN, dan laporan keuangan tahunan sesuai regulasi pemerintah Indonesia untuk memastikan bisnis Anda selalu compliant.</p>
+                        </div>
+                        <a href="#" class="text-blue-600 font-semibold text-sm hover:text-blue-700 hover:underline transition inline-flex items-center gap-1">
+                            Pelajari Modul →
+                        </a>
+                    </div>
+
+                    <!-- Module Card 6 -->
+                    <div class="module-card bg-white rounded-lg shadow-md p-6 border border-gray-200 hover:border-blue-300">
+                        <div class="mb-4">
+                            <div class="w-14 h-14 bg-cyan-100 rounded-lg flex items-center justify-center mb-4">
+                                <svg class="w-7 h-7 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <h4 class="text-lg font-bold text-gray-900 mb-2">6. Tips & Trik Aplikasi</h4>
+                            <p class="text-gray-600 text-sm leading-relaxed">Maksimalkan fitur-fitur Web Ledger dengan tips praktis, shortcut keyboard, dan best practices untuk meningkatkan efisiensi pencatatan akuntansi Anda sehari-hari.</p>
+                        </div>
+                        <a href="#" class="text-blue-600 font-semibold text-sm hover:text-blue-700 hover:underline transition inline-flex items-center gap-1">
+                            Pelajari Modul →
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Section -->
+            <div class="mb-12">
+                <h3 class="text-2xl font-bold text-gray-900 mb-6">Pertanyaan yang Sering Diajukan (FAQ)</h3>
+
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 divide-y divide-gray-200">
+                    <!-- FAQ Item 1 -->
+                    <div class="accordion-item">
+                        <button class="w-full px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition text-left" onclick="toggleAccordion(this)">
+                            <span class="font-semibold text-gray-900">Apa itu SAK EMKM dan bagaimana hubungannya dengan aplikasi ini?</span>
+                            <svg class="w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                            </svg>
+                        </button>
+                        <div class="hidden px-6 py-4 bg-gray-50 text-gray-600 text-sm">
+                            SAK EMKM (Standar Akuntansi Keuangan Entitas Mikro, Kecil, dan Menengah) adalah standar akuntansi yang disederhanakan untuk UMKM di Indonesia. Web Ledger dirancang khusus untuk membantu Anda menerapkan SAK EMKM dengan mudah, sehingga laporan keuangan Anda sudah sesuai regulasi sejak awal.
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 2 -->
+                    <div class="accordion-item">
+                        <button class="w-full px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition text-left" onclick="toggleAccordion(this)">
+                            <span class="font-semibold text-gray-900">Bagaimana cara mencatat retur penjualan dengan benar?</span>
+                            <svg class="w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                            </svg>
+                        </button>
+                        <div class="hidden px-6 py-4 bg-gray-50 text-gray-600 text-sm">
+                            Retur penjualan dicatat sebagai pengurang dari pendapatan penjualan. Di Web Ledger, Anda bisa memilih opsi "Retur Penjualan" saat menginput transaksi, dan sistem akan otomatis mengurangi nilai penjualan Anda. Pastikan juga menginput dengan detail tanggal retur, jumlah barang, dan alasan retur untuk laporan yang lengkap.
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 3 -->
+                    <div class="accordion-item">
+                        <button class="w-full px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition text-left" onclick="toggleAccordion(this)">
+                            <span class="font-semibold text-gray-900">Data laporan saya tidak cocok dengan catatan manual, apa yang harus dilakukan?</span>
+                            <svg class="w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                            </svg>
+                        </button>
+                        <div class="hidden px-6 py-4 bg-gray-50 text-gray-600 text-sm">
+                            Cek kembali entri transaksi Anda di halaman Transaksi. Biasanya ada kemungkinan: (1) ada transaksi yang terlewat, (2) tanggal atau nominal transaksi salah, atau (3) akun yang dipilih tidak sesuai. Gunakan fitur filter dan search di halaman Laporan untuk membandingkan dengan catatan manual Anda. Jika masih ragu, hubungi tim support kami.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA Section -->
+            <div class="bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg shadow-lg p-8 text-white text-center">
+                <h3 class="text-2xl font-bold mb-3">Butuh Bantuan Lebih Lanjut?</h3>
+                <p class="text-blue-100 mb-6 max-w-2xl mx-auto">Tim support kami siap membantu Anda 24/7. Jangan ragu untuk menghubungi kami melalui email atau live chat.</p>
+                <div class="flex gap-4 justify-center">
+                    <button class="bg-white text-blue-600 font-semibold px-6 py-3 rounded-lg hover:bg-blue-50 transition">
+                        Hubungi Support
+                    </button>
+                    <button class="border-2 border-white text-white font-semibold px-6 py-3 rounded-lg hover:bg-blue-700 transition">
+                        Lihat Dokumentasi
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- MOBILE OVERLAY -->
+    <div id="overlay" class="hidden fixed inset-0 bg-black bg-opacity-50 md:hidden z-20" onclick="toggleSidebar()"></div>
+
+    <!-- JavaScript -->
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            sidebar.classList.toggle('-translate-x-full');
+            overlay.classList.toggle('hidden');
+        }
+
+        document.getElementById('sidebarToggle').addEventListener('click', toggleSidebar);
+
+        function toggleAccordion(button) {
+            const content = button.nextElementSibling;
+            const icon = button.querySelector('svg');
+            
+            content.classList.toggle('hidden');
+            icon.classList.toggle('rotate-180');
+        }
+
+        // Initialize Lucide Icons
+        lucide.createIcons();
+    </script>
+</body>
+</html>
