@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelola Perusahaan - Web Ledger SAK EMKM</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .sidebar-active {
+            background-color: rgba(59, 130, 246, 0.1);
+            border-left: 4px solid #3B82F6;
+        }
+        .modal-overlay {
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+        }
+        .status-badge-active {
+            background: rgba(34, 197, 94, 0.1);
+            color: #16a34a;
+        }
+        .status-badge-inactive {
+            background: rgba(239, 68, 68, 0.1);
+            color: #dc2626;
+        }
+        table tbody tr:hover {
+            background-color: rgba(59, 130, 246, 0.05);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- HEADER -->
+    <header class="bg-white shadow-md sticky top-0 z-40">
+        <div class="flex items-center justify-between px-6 py-4">
+            <div class="flex items-center gap-3">
+                <button id="sidebarToggle" class="md:hidden p-2 hover:bg-gray-100 rounded-lg">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+                <h1 class="text-2xl font-bold text-gray-900">Kelola Perusahaan</h1>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="hidden md:flex bg-gray-100 rounded-lg px-4 py-2">
+                    <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                    <input type="text" id="searchCompany" placeholder="Cari perusahaan..." class="ml-2 bg-gray-100 outline-none w-40">
+                </div>
+                <!-- User Profile -->
+                <div class="flex items-center gap-3 border-l pl-4">
+                    <div class="text-right hidden sm:block">
+                        <p class="text-sm font-semibold text-gray-900">Super Admin</p>
+                        <p class="text-xs text-gray-500">Administrator</p>
+                    </div>
+                    <div class="w-10 h-10 bg-gradient-to-br from-red-400 to-red-600 rounded-full flex items-center justify-center text-white font-bold">
+                        SA
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="flex h-screen overflow-hidden">
+        <!-- SIDEBAR NAVIGATION -->
+        <aside id="sidebar" class="w-64 bg-white shadow-lg overflow-y-auto transition-all duration-300 -translate-x-full md:translate-x-0 absolute md:relative h-full md:h-auto z-30 md:z-0">
+            <nav class="px-4 py-6">
+                <div class="flex items-center gap-2 mb-8 px-2">
+                    <div class="w-8 h-8 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-sm">₽</span>
+                    </div>
+                    <span class="font-bold text-lg text-gray-900">Web Ledger</span>
+                </div>
+
+                <!-- Menu Items -->
+                <div class="space-y-2">
+                    <!-- Admin Dashboard Menu -->
+                    <a href="admin-dashboard.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
+                        </svg>
+                        <span class="font-medium">Admin Dashboard</span>
+                    </a>
+
+                    <!-- Kelola User Menu -->
+                    <a href="admin-manage-user.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.856-1.487M15 10a3 3 0 11-6 0 3 3 0 016 0zM16 20a3 3 0 00-6 0m6 0H9m5-8h.01M9 16H5a2 2 0 00-2 2v1"></path>
+                        </svg>
+                        <span class="font-medium">Kelola User</span>
+                    </a>
+
+                    <!-- Kelola Perusahaan Menu -->
+                    <a href="admin-manage-company.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 sidebar-active hover:bg-gray-100 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"></path>
+                        </svg>
+                        <span class="font-medium">Kelola Perusahaan</span>
+                    </a>
+
+                    <!-- Kelola Role Menu -->
+                    <a href="admin-manage-role.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <span class="font-medium">Kelola Role</span>
+                    </a>
+
+                    <!-- Laporan Aktivitas Menu -->
+                    <a href="admin-activity-log.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                        <span class="font-medium">Laporan Aktivitas</span>
+                    </a>
+
+                    <!-- Pengaturan Sistem Menu -->
+                    <a href="admin-settings.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                        <span class="font-medium">Pengaturan Sistem</span>
+                    </a>
+
+                    <hr class="my-4">
+
+                    <!-- Logout -->
+                    <a href="../login.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-red-600 hover:bg-red-50 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                        </svg>
+                        <span class="font-medium">Logout</span>
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="flex-1 overflow-y-auto">
+            <div class="p-6">
+                <!-- Header Section -->
+                <div class="flex justify-between items-center mb-6">
+                    <div>
+                        <p class="text-gray-600">Total Perusahaan: <span class="font-bold text-lg text-gray-900" id="totalCompanies">6</span></p>
+                    </div>
+                    <button id="btnAddCompany" class="px-6 py-2 rounded-lg bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold hover:shadow-lg transition flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                        </svg>
+                        Tambah Perusahaan
+                    </button>
+                </div>
+
+                <!-- Filter Section -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                    <input type="text" id="filterName" placeholder="Cari nama perusahaan..." class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <select id="filterIndustry" class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white">
+                        <option value="">Semua Industri</option>
+                        <option value="dagang">Dagang</option>
+                        <option value="jasa">Jasa</option>
+                        <option value="manufaktur">Manufaktur</option>
+                    </select>
+                    <select id="filterStatus" class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white">
+                        <option value="">Semua Status</option>
+                        <option value="aktif">Aktif</option>
+                        <option value="nonaktif">Nonaktif</option>
+                    </select>
+                </div>
+
+                <!-- Companies Table -->
+                <div class="bg-white rounded-lg shadow overflow-hidden">
+                    <table class="w-full">
+                        <thead class="bg-gray-100 border-b">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">No</th>
+                                <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Nama Perusahaan</th>
+                                <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Industri</th>
+                                <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">NPWP</th>
+                                <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Kontak</th>
+                                <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Status</th>
+                                <th class="px-6 py-3 text-center text-sm font-semibold text-gray-700">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="companyTableBody">
+                            <!-- Data akan dimuat oleh JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Empty State -->
+                <div id="emptyState" class="hidden text-center py-12">
+                    <svg class="w-16 h-16 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"></path>
+                    </svg>
+                    <p class="text-gray-500">Tidak ada perusahaan ditemukan</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- MODAL: Add/Edit Company -->
+    <div id="companyModal" class="fixed inset-0 modal-overlay hidden flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-md mx-4">
+            <div class="px-6 py-4 border-b flex justify-between items-center">
+                <h2 id="modalTitle" class="text-xl font-bold text-gray-900">Tambah Perusahaan</h2>
+                <button id="closeModal" class="text-gray-500 hover:text-gray-700">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            <form id="companyForm" class="p-6 space-y-4">
+                <div hidden id="companyIdField">
+                    <input type="hidden" id="companyId">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Nama Perusahaan *</label>
+                    <input type="text" id="companyName" placeholder="Masukkan nama perusahaan" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Industri *</label>
+                    <select id="companyIndustry" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white" required>
+                        <option value="">Pilih Industri</option>
+                        <option value="dagang">Dagang</option>
+                        <option value="jasa">Jasa</option>
+                        <option value="manufaktur">Manufaktur</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">NPWP *</label>
+                    <input type="text" id="companyNpwp" placeholder="Masukkan NPWP" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Email *</label>
+                    <input type="email" id="companyEmail" placeholder="Masukkan email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">No. Telepon *</label>
+                    <input type="tel" id="companyPhone" placeholder="Masukkan no. telepon" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Alamat *</label>
+                    <textarea id="companyAddress" placeholder="Masukkan alamat" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" rows="3" required></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Status *</label>
+                    <select id="companyStatus" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white" required>
+                        <option value="aktif">Aktif</option>
+                        <option value="nonaktif">Nonaktif</option>
+                    </select>
+                </div>
+
+                <div class="pt-4 flex gap-3">
+                    <button type="button" id="cancelBtn" class="flex-1 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 font-medium hover:bg-gray-50 transition">
+                        Batal
+                    </button>
+                    <button type="submit" class="flex-1 px-4 py-2 bg-blue-500 text-white rounded-lg font-medium hover:bg-blue-600 transition">
+                        Simpan
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: Confirm Delete -->
+    <div id="deleteModal" class="fixed inset-0 modal-overlay hidden flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-sm mx-4">
+            <div class="p-6 text-center">
+                <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4v2m0-6a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-lg font-bold text-gray-900 mb-2">Hapus Perusahaan</h3>
+                <p class="text-gray-600 mb-6">Apakah Anda yakin ingin menghapus perusahaan ini? Tindakan ini tidak dapat dibatalkan.</p>
+                <div class="flex gap-3">
+                    <button id="cancelDelete" class="flex-1 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 font-medium hover:bg-gray-50 transition">
+                        Batal
+                    </button>
+                    <button id="confirmDelete" class="flex-1 px-4 py-2 bg-red-500 text-white rounded-lg font-medium hover:bg-red-600 transition">
+                        Hapus
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-4 right-4 px-4 py-3 bg-gray-900 text-white rounded-lg shadow-lg hidden flex items-center gap-2 z-40">
+        <span id="toastMessage"></span>
+    </div>
+
+    <script>
+        // Mock Data
+        let companies = [
+            { id: 1, name: 'PT. Maju Jaya', industry: 'dagang', npwp: '12.345.678.901', email: 'info@majujaya.com', phone: '021-1234567', address: 'Jl. Merdeka No. 123, Jakarta', status: 'aktif' },
+            { id: 2, name: 'UD. Sejahtera', industry: 'jasa', npwp: '98.765.432.109', email: 'contact@sejahtera.com', phone: '0274-5678901', address: 'Jl. Sudirman No. 45, Yogyakarta', status: 'aktif' },
+            { id: 3, name: 'CV. Berkembang', industry: 'manufaktur', npwp: '55.666.777.888', email: 'info@berkembang.co.id', phone: '031-9876543', address: 'Jl. Pembangunan No. 12, Surabaya', status: 'aktif' },
+            { id: 4, name: 'PT. Lancar Usaha', industry: 'dagang', npwp: '11.222.333.444', email: 'cs@lancarusaha.com', phone: '0261-1122334', address: 'Jl. Gatot Subroto No. 78, Bandung', status: 'aktif' },
+            { id: 5, name: 'Toko Grosir ABC', industry: 'dagang', npwp: '77.888.999.000', email: 'toko@grosairabc.com', phone: '024-4455667', address: 'Jl. Diponegoro No. 56, Semarang', status: 'nonaktif' },
+            { id: 6, name: 'Jasa Konsultasi XYZ', industry: 'jasa', npwp: '33.444.555.666', email: 'consultant@jasaxyz.com', phone: '0813-1122334', address: 'Jl. Ahmad Yani No. 89, Medan', status: 'aktif' }
+        ];
+
+        let currentEditId = null;
+        let currentDeleteId = null;
+
+        // DOM Elements
+        const btnAddCompany = document.getElementById('btnAddCompany');
+        const companyModal = document.getElementById('companyModal');
+        const closeModal = document.getElementById('closeModal');
+        const companyForm = document.getElementById('companyForm');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const deleteModal = document.getElementById('deleteModal');
+        const cancelDelete = document.getElementById('cancelDelete');
+        const confirmDelete = document.getElementById('confirmDelete');
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const sidebar = document.getElementById('sidebar');
+        const filterName = document.getElementById('filterName');
+        const filterIndustry = document.getElementById('filterIndustry');
+        const filterStatus = document.getElementById('filterStatus');
+        const searchCompany = document.getElementById('searchCompany');
+
+        // Sidebar Toggle
+        sidebarToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('-translate-x-full');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!sidebar.contains(e.target) && !sidebarToggle.contains(e.target)) {
+                sidebar.classList.add('-translate-x-full');
+            }
+        });
+
+        // Add Company Button
+        btnAddCompany.addEventListener('click', () => {
+            currentEditId = null;
+            document.getElementById('modalTitle').textContent = 'Tambah Perusahaan';
+            companyForm.reset();
+            companyModal.classList.remove('hidden');
+        });
+
+        // Close Modal
+        closeModal.addEventListener('click', closeCompanyModal);
+        cancelBtn.addEventListener('click', closeCompanyModal);
+
+        function closeCompanyModal() {
+            companyModal.classList.add('hidden');
+            companyForm.reset();
+        }
+
+        // Form Submit
+        companyForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('companyName').value;
+            const industry = document.getElementById('companyIndustry').value;
+            const npwp = document.getElementById('companyNpwp').value;
+            const email = document.getElementById('companyEmail').value;
+            const phone = document.getElementById('companyPhone').value;
+            const address = document.getElementById('companyAddress').value;
+            const status = document.getElementById('companyStatus').value;
+
+            if (currentEditId) {
+                const companyIndex = companies.findIndex(c => c.id === currentEditId);
+                if (companyIndex !== -1) {
+                    companies[companyIndex] = {
+                        ...companies[companyIndex],
+                        name,
+                        industry,
+                        npwp,
+                        email,
+                        phone,
+                        address,
+                        status
+                    };
+                    showToast('Perusahaan berhasil diperbarui');
+                }
+            } else {
+                const newCompany = {
+                    id: Math.max(...companies.map(c => c.id)) + 1,
+                    name,
+                    industry,
+                    npwp,
+                    email,
+                    phone,
+                    address,
+                    status
+                };
+                companies.push(newCompany);
+                showToast('Perusahaan berhasil ditambahkan');
+            }
+
+            closeCompanyModal();
+            renderTable();
+        });
+
+        // Delete Company
+        function deleteCompany(id) {
+            currentDeleteId = id;
+            deleteModal.classList.remove('hidden');
+        }
+
+        cancelDelete.addEventListener('click', () => {
+            deleteModal.classList.add('hidden');
+            currentDeleteId = null;
+        });
+
+        confirmDelete.addEventListener('click', () => {
+            companies = companies.filter(c => c.id !== currentDeleteId);
+            showToast('Perusahaan berhasil dihapus');
+            deleteModal.classList.add('hidden');
+            currentDeleteId = null;
+            renderTable();
+        });
+
+        // Edit Company
+        function editCompany(id) {
+            const company = companies.find(c => c.id === id);
+            if (company) {
+                currentEditId = id;
+                document.getElementById('modalTitle').textContent = 'Edit Perusahaan';
+                document.getElementById('companyName').value = company.name;
+                document.getElementById('companyIndustry').value = company.industry;
+                document.getElementById('companyNpwp').value = company.npwp;
+                document.getElementById('companyEmail').value = company.email;
+                document.getElementById('companyPhone').value = company.phone;
+                document.getElementById('companyAddress').value = company.address;
+                document.getElementById('companyStatus').value = company.status;
+                companyModal.classList.remove('hidden');
+            }
+        }
+
+        // Render Table
+        function renderTable() {
+            let filteredCompanies = companies;
+
+            const nameFilter = filterName.value.toLowerCase();
+            const industryFilter = filterIndustry.value;
+            const statusFilter = filterStatus.value;
+            const searchFilter = searchCompany.value.toLowerCase();
+
+            filteredCompanies = filteredCompanies.filter(company => {
+                const matchName = company.name.toLowerCase().includes(nameFilter) || company.email.toLowerCase().includes(searchFilter);
+                const matchIndustry = !industryFilter || company.industry === industryFilter;
+                const matchStatus = !statusFilter || company.status === statusFilter;
+                return matchName && matchIndustry && matchStatus;
+            });
+
+            const tbody = document.getElementById('companyTableBody');
+            const emptyState = document.getElementById('emptyState');
+
+            if (filteredCompanies.length === 0) {
+                tbody.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                document.getElementById('totalCompanies').textContent = companies.length;
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+
+            tbody.innerHTML = filteredCompanies.map((company, index) => `
+                <tr class="border-b">
+                    <td class="px-6 py-4 text-sm text-gray-700">${index + 1}</td>
+                    <td class="px-6 py-4 text-sm font-medium text-gray-900">${company.name}</td>
+                    <td class="px-6 py-4 text-sm text-gray-700">${formatIndustry(company.industry)}</td>
+                    <td class="px-6 py-4 text-sm text-gray-700">${company.npwp}</td>
+                    <td class="px-6 py-4 text-sm text-gray-700">${company.phone}</td>
+                    <td class="px-6 py-4 text-sm">
+                        <span class="px-3 py-1 rounded-full text-xs font-semibold ${company.status === 'aktif' ? 'status-badge-active' : 'status-badge-inactive'}">
+                            ${company.status === 'aktif' ? 'Aktif' : 'Nonaktif'}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        <div class="flex gap-2 justify-center">
+                            <button onclick="editCompany(${company.id})" class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition" title="Edit">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                </svg>
+                            </button>
+                            <button onclick="deleteCompany(${company.id})" class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition" title="Hapus">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+
+            document.getElementById('totalCompanies').textContent = companies.length;
+        }
+
+        // Format Industry
+        function formatIndustry(industry) {
+            const industryMap = {
+                'dagang': 'Dagang',
+                'jasa': 'Jasa',
+                'manufaktur': 'Manufaktur'
+            };
+            return industryMap[industry] || industry;
+        }
+
+        // Show Toast Notification
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            toastMessage.textContent = message;
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3000);
+        }
+
+        // Event Listeners for Filters
+        filterName.addEventListener('input', renderTable);
+        filterIndustry.addEventListener('change', renderTable);
+        filterStatus.addEventListener('change', renderTable);
+        searchCompany.addEventListener('input', renderTable);
+
+        // Initial Render
+        renderTable();
+    </script>
+</body>
+</html>

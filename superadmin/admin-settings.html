@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pengaturan Sistem - Web Ledger SAK EMKM</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .sidebar-active {
+            background-color: rgba(59, 130, 246, 0.1);
+            border-left: 4px solid #3B82F6;
+        }
+        .tab-active {
+            color: #3B82F6;
+            border-bottom: 2px solid #3B82F6;
+        }
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .toggle-slider {
+            background-color: #3B82F6;
+        }
+        input:checked + .toggle-slider:before {
+            transform: translateX(26px);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- HEADER -->
+    <header class="bg-white shadow-md sticky top-0 z-40">
+        <div class="flex items-center justify-between px-6 py-4">
+            <div class="flex items-center gap-3">
+                <button id="sidebarToggle" class="md:hidden p-2 hover:bg-gray-100 rounded-lg">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+                <h1 class="text-2xl font-bold text-gray-900">Pengaturan Sistem</h1>
+            </div>
+            <div class="flex items-center gap-4">
+                <!-- User Profile -->
+                <div class="flex items-center gap-3 border-l pl-4">
+                    <div class="text-right hidden sm:block">
+                        <p class="text-sm font-semibold text-gray-900">Super Admin</p>
+                        <p class="text-xs text-gray-500">Administrator</p>
+                    </div>
+                    <div class="w-10 h-10 bg-gradient-to-br from-red-400 to-red-600 rounded-full flex items-center justify-center text-white font-bold">
+                        SA
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="flex h-screen overflow-hidden">
+        <!-- SIDEBAR NAVIGATION -->
+        <aside id="sidebar" class="w-64 bg-white shadow-lg overflow-y-auto transition-all duration-300 -translate-x-full md:translate-x-0 absolute md:relative h-full md:h-auto z-30 md:z-0">
+            <nav class="px-4 py-6">
+                <div class="flex items-center gap-2 mb-8 px-2">
+                    <div class="w-8 h-8 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-sm">₽</span>
+                    </div>
+                    <span class="font-bold text-lg text-gray-900">Web Ledger</span>
+                </div>
+
+                <!-- Menu Items -->
+                <div class="space-y-2">
+                    <!-- Admin Dashboard Menu -->
+                    <a href="admin-dashboard.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
+                        </svg>
+                        <span class="font-medium">Admin Dashboard</span>
+                    </a>
+
+                    <!-- Kelola User Menu -->
+                    <a href="admin-manage-user.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.856-1.487M15 10a3 3 0 11-6 0 3 3 0 016 0zM16 20a3 3 0 00-6 0m6 0H9m5-8h.01M9 16H5a2 2 0 00-2 2v1"></path>
+                        </svg>
+                        <span class="font-medium">Kelola User</span>
+                    </a>
+
+                    <!-- Kelola Perusahaan Menu -->
+                    <a href="admin-manage-company.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"></path>
+                        </svg>
+                        <span class="font-medium">Kelola Perusahaan</span>
+                    </a>
+
+                    <!-- Kelola Role Menu -->
+                    <a href="admin-manage-role.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <span class="font-medium">Kelola Role</span>
+                    </a>
+
+                    <!-- Laporan Aktivitas Menu -->
+                    <a href="admin-activity-log.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                        <span class="font-medium">Laporan Aktivitas</span>
+                    </a>
+
+                    <!-- Pengaturan Sistem Menu -->
+                    <a href="admin-settings.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 sidebar-active hover:bg-gray-100 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                        <span class="font-medium">Pengaturan Sistem</span>
+                    </a>
+
+                    <hr class="my-4">
+
+                    <!-- Logout -->
+                    <a href="../login.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-red-600 hover:bg-red-50 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                        </svg>
+                        <span class="font-medium">Logout</span>
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="flex-1 overflow-y-auto">
+            <div class="p-6">
+                <!-- Tabs -->
+                <div class="flex gap-6 mb-6 border-b">
+                    <button class="tab-btn tab-active pb-3 font-medium text-gray-900" data-tab="general">
+                        Umum
+                    </button>
+                    <button class="tab-btn pb-3 font-medium text-gray-700 hover:text-gray-900" data-tab="security">
+                        Keamanan
+                    </button>
+                    <button class="tab-btn pb-3 font-medium text-gray-700 hover:text-gray-900" data-tab="notification">
+                        Notifikasi
+                    </button>
+                    <button class="tab-btn pb-3 font-medium text-gray-700 hover:text-gray-900" data-tab="maintenance">
+                        Pemeliharaan
+                    </button>
+                </div>
+
+                <!-- Tab: General -->
+                <div class="tab-content" id="general">
+                    <div class="bg-white rounded-lg shadow-md p-6 max-w-2xl">
+                        <h2 class="text-lg font-bold text-gray-900 mb-6">Pengaturan Umum</h2>
+
+                        <div class="space-y-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Nama Aplikasi</label>
+                                <input type="text" value="Web Ledger SAK EMKM" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Email Sistem</label>
+                                <input type="email" value="system@weblegger.com" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">No. Telepon Support</label>
+                                <input type="tel" value="+62 XXX-XXX-XXXX" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Zona Waktu</label>
+                                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white">
+                                    <option>Asia/Jakarta (UTC+7)</option>
+                                    <option>Asia/Bangkok (UTC+7)</option>
+                                    <option>Asia/Manila (UTC+8)</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Bahasa Default</label>
+                                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white">
+                                    <option>Bahasa Indonesia</option>
+                                    <option>English</option>
+                                    <option>中文</option>
+                                </select>
+                            </div>
+
+                            <button class="px-6 py-2 bg-blue-500 text-white rounded-lg font-medium hover:bg-blue-600 transition">Simpan</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab: Security -->
+                <div class="tab-content hidden" id="security">
+                    <div class="bg-white rounded-lg shadow-md p-6 max-w-2xl">
+                        <h2 class="text-lg font-bold text-gray-900 mb-6">Pengaturan Keamanan</h2>
+
+                        <div class="space-y-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="font-medium text-gray-900">Two-Factor Authentication</p>
+                                    <p class="text-sm text-gray-500">Tingkatkan keamanan akun dengan 2FA</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+
+                            <hr>
+
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="font-medium text-gray-900">Force HTTPS</p>
+                                    <p class="text-sm text-gray-500">Paksa semua koneksi menggunakan HTTPS</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+
+                            <hr>
+
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="font-medium text-gray-900">IP Whitelist</p>
+                                    <p class="text-sm text-gray-500">Batasi akses hanya dari IP tertentu</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+
+                            <hr>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Masa Berlaku Session (menit)</label>
+                                <input type="number" value="60" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Password Minimum Length</label>
+                                <input type="number" value="8" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            </div>
+
+                            <button class="px-6 py-2 bg-blue-500 text-white rounded-lg font-medium hover:bg-blue-600 transition">Simpan</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab: Notification -->
+                <div class="tab-content hidden" id="notification">
+                    <div class="bg-white rounded-lg shadow-md p-6 max-w-2xl">
+                        <h2 class="text-lg font-bold text-gray-900 mb-6">Pengaturan Notifikasi</h2>
+
+                        <div class="space-y-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="font-medium text-gray-900">Email Notifikasi</p>
+                                    <p class="text-sm text-gray-500">Terima notifikasi via email</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+
+                            <hr>
+
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="font-medium text-gray-900">SMS Notifikasi</p>
+                                    <p class="text-sm text-gray-500">Terima notifikasi via SMS</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+
+                            <hr>
+
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="font-medium text-gray-900">Push Notification</p>
+                                    <p class="text-sm text-gray-500">Terima notifikasi push di browser</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+
+                            <hr>
+
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="font-medium text-gray-900">Notifikasi Login Baru</p>
+                                    <p class="text-sm text-gray-500">Beritahu saat ada login baru</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+
+                            <hr>
+
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="font-medium text-gray-900">Laporan Harian</p>
+                                    <p class="text-sm text-gray-500">Terima laporan sistem harian</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+
+                            <button class="px-6 py-2 bg-blue-500 text-white rounded-lg font-medium hover:bg-blue-600 transition">Simpan</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab: Maintenance -->
+                <div class="tab-content hidden" id="maintenance">
+                    <div class="space-y-6">
+                        <div class="bg-white rounded-lg shadow-md p-6 max-w-2xl">
+                            <h2 class="text-lg font-bold text-gray-900 mb-6">Pemeliharaan Sistem</h2>
+
+                            <div class="space-y-6">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="font-medium text-gray-900">Mode Pemeliharaan</p>
+                                        <p class="text-sm text-gray-500">Tangani sistem untuk pemeliharaan</p>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+
+                                <hr>
+
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Pesan Pemeliharaan</label>
+                                    <textarea placeholder="Pesan untuk ditampilkan saat mode pemeliharaan" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" rows="3"></textarea>
+                                </div>
+
+                                <button class="px-6 py-2 bg-blue-500 text-white rounded-lg font-medium hover:bg-blue-600 transition">Simpan</button>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-lg shadow-md p-6 max-w-2xl">
+                            <h2 class="text-lg font-bold text-gray-900 mb-6">Database</h2>
+
+                            <div class="space-y-4">
+                                <button class="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-700 font-medium hover:bg-gray-50 transition flex items-center gap-2">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                                    </svg>
+                                    Backup Database
+                                </button>
+
+                                <button class="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-700 font-medium hover:bg-gray-50 transition flex items-center gap-2">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3v-6"></path>
+                                    </svg>
+                                    Restore Database
+                                </button>
+
+                                <button class="w-full px-4 py-3 border border-red-300 rounded-lg text-red-600 font-medium hover:bg-red-50 transition flex items-center gap-2">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                    </svg>
+                                    Bersihkan Log Lama
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Sidebar Toggle
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const sidebar = document.getElementById('sidebar');
+
+        sidebarToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('-translate-x-full');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!sidebar.contains(e.target) && !sidebarToggle.contains(e.target)) {
+                sidebar.classList.add('-translate-x-full');
+            }
+        });
+
+        // Tab Switching
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const tabName = button.getAttribute('data-tab');
+
+                // Hide all tabs
+                tabContents.forEach(tab => tab.classList.add('hidden'));
+
+                // Remove active class from all buttons
+                tabButtons.forEach(btn => {
+                    btn.classList.remove('tab-active');
+                    btn.classList.add('text-gray-700');
+                    btn.classList.remove('text-gray-900');
+                });
+
+                // Show selected tab
+                document.getElementById(tabName).classList.remove('hidden');
+
+                // Add active class to button
+                button.classList.add('tab-active');
+                button.classList.remove('text-gray-700');
+                button.classList.add('text-gray-900');
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelola Role - Super Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .sidebar-active {
+            background-color: rgba(59, 130, 246, 0.1);
+            border-left: 4px solid #3B82F6;
+        }
+        .modal-overlay {
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+        }
+        .role-card-hover {
+            transition: all 0.3s ease;
+        }
+        .role-card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- HEADER -->
+    <header class="bg-white shadow-md sticky top-0 z-40">
+        <div class="flex items-center justify-between px-6 py-4">
+            <div class="flex items-center gap-3">
+                <button id="sidebarToggle" class="md:hidden p-2 hover:bg-gray-100 rounded-lg">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+                <h1 class="text-xl font-bold text-gray-900">Web Ledger - Kelola Role</h1>
+            </div>
+            <!-- Search & User Profile -->
+            <div class="flex items-center gap-6">
+                <!-- User Profile -->
+                <div class="flex items-center gap-3 border-l pl-4">
+                    <div class="text-right hidden sm:block">
+                        <p class="text-sm font-semibold text-gray-900">Super Admin</p>
+                        <p class="text-xs text-gray-500">Administrator</p>
+                    </div>
+                    <div class="w-10 h-10 bg-gradient-to-br from-red-400 to-red-600 rounded-full flex items-center justify-center text-white font-bold">
+                        SA
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="flex h-screen overflow-hidden">
+        <!-- SIDEBAR NAVIGATION -->
+        <aside id="sidebar" class="w-64 bg-white shadow-lg overflow-y-auto transition-all duration-300 -translate-x-full md:translate-x-0 absolute md:relative h-full md:h-auto z-30 md:z-0">
+            <nav class="px-4 py-6">
+                <div class="flex items-center gap-2 mb-8 px-2">
+                    <div class="w-8 h-8 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-sm">₽</span>
+                    </div>
+                    <span class="font-bold text-lg text-gray-900">Web Ledger</span>
+                </div>
+
+                <!-- Menu Items -->
+                <div class="space-y-2">
+                    <!-- Admin Dashboard Menu -->
+                    <a href="admin-dashboard.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
+                        </svg>
+                        <span class="font-medium">Admin Dashboard</span>
+                    </a>
+
+                    <!-- Kelola User Menu -->
+                    <a href="admin-manage-user.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.856-1.487M15 10a3 3 0 11-6 0 3 3 0 016 0zM16 20a3 3 0 00-6 0m6 0H9m5-8h.01M9 16H5a2 2 0 00-2 2v1"></path>
+                        </svg>
+                        <span class="font-medium">Kelola User</span>
+                    </a>
+
+                    <!-- Kelola Perusahaan Menu -->
+                    <a href="admin-manage-company.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"></path>
+                        </svg>
+                        <span class="font-medium">Kelola Perusahaan</span>
+                    </a>
+
+                    <!-- Kelola Role Menu -->
+                    <a href="admin-manage-role.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 sidebar-active hover:bg-gray-100 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <span class="font-medium">Kelola Role</span>
+                    </a>
+
+                    <!-- Laporan Aktivitas Menu -->
+                    <a href="admin-activity-log.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                        <span class="font-medium">Laporan Aktivitas</span>
+                    </a>
+
+                    <!-- Pengaturan Sistem Menu -->
+                    <a href="admin-settings.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                        <span class="font-medium">Pengaturan Sistem</span>
+                    </a>
+
+                    <hr class="my-4">
+
+                    <!-- Logout -->
+                    <a href="../login.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-red-600 hover:bg-red-50 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                        </svg>
+                        <span class="font-medium">Logout</span>
+
+            <!-- Content Area -->
+            <main class="flex-1 overflow-auto p-6">
+                <!-- Title Section -->
+                <div class="mb-6 flex items-center justify-between">
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-900">Kelola Role</h2>
+                        <p class="text-sm text-gray-500 mt-1">Kelola dan atur role pengguna aplikasi</p>
+                    </div>
+                    <button onclick="openAddModal()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                        </svg>
+                        <span>Tambah Role</span>
+                    </button>
+                </div>
+
+                <!-- Role Cards Grid -->
+                <div id="rolesContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Role cards akan dirender di sini -->
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Add/Edit Role Modal -->
+    <div id="roleModal" class="modal-overlay fixed inset-0 hidden flex items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full">
+            <div class="flex items-center justify-between p-6 border-b border-gray-200">
+                <h3 id="modalTitle" class="text-xl font-bold text-gray-900">Tambah Role Baru</h3>
+                <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <form id="roleForm" onsubmit="handleFormSubmit(event)" class="p-6 space-y-4">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Nama Role <span class="text-red-500">*</span></label>
+                    <input type="text" id="roleName" placeholder="Masukkan nama role" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Deskripsi <span class="text-red-500">*</span></label>
+                    <textarea id="roleDescription" placeholder="Masukkan deskripsi role" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-3">Izin Akses</label>
+                    <div class="bg-gray-50 p-4 rounded-lg space-y-2">
+                        <label class="flex items-center cursor-pointer">
+                            <input type="checkbox" id="permView" class="w-4 h-4 text-blue-600 rounded" checked disabled>
+                            <span class="ml-3 text-sm text-gray-700">Melihat Data</span>
+                        </label>
+                        <label class="flex items-center cursor-pointer">
+                            <input type="checkbox" id="permCreate" class="w-4 h-4 text-blue-600 rounded">
+                            <span class="ml-3 text-sm text-gray-700">Membuat Data Baru</span>
+                        </label>
+                        <label class="flex items-center cursor-pointer">
+                            <input type="checkbox" id="permEdit" class="w-4 h-4 text-blue-600 rounded">
+                            <span class="ml-3 text-sm text-gray-700">Mengedit Data</span>
+                        </label>
+                        <label class="flex items-center cursor-pointer">
+                            <input type="checkbox" id="permDelete" class="w-4 h-4 text-blue-600 rounded">
+                            <span class="ml-3 text-sm text-gray-700">Menghapus Data</span>
+                        </label>
+                        <label class="flex items-center cursor-pointer">
+                            <input type="checkbox" id="permExport" class="w-4 h-4 text-blue-600 rounded">
+                            <span class="ml-3 text-sm text-gray-700">Mengekspor Data</span>
+                        </label>
+                        <label class="flex items-center cursor-pointer">
+                            <input type="checkbox" id="permReport" class="w-4 h-4 text-blue-600 rounded">
+                            <span class="ml-3 text-sm text-gray-700">Melihat Laporan</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-end gap-3 pt-6 border-t border-gray-200">
+                    <button type="button" onclick="closeModal()" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition">
+                        Batal
+                    </button>
+                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                        Simpan Role
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteConfirmModal" class="modal-overlay fixed inset-0 hidden flex items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-lg shadow-xl max-w-sm w-full">
+            <div class="p-6">
+                <div class="flex items-center justify-center w-12 h-12 mx-auto bg-red-100 rounded-full">
+                    <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4v.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-900 text-center mt-4">Hapus Role?</h3>
+                <p id="deleteMessage" class="text-sm text-gray-500 text-center mt-2"></p>
+                <div class="flex items-center justify-center gap-3 mt-6">
+                    <button onclick="closeDeleteModal()" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition">
+                        Batal
+                    </button>
+                    <button onclick="confirmDelete()" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition">
+                        Hapus
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-4 right-4 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg opacity-0 transition-opacity duration-300 z-50" style="pointer-events: none;"></div>
+
+    <script>
+        // Mock data untuk roles
+        let roles = [
+            {
+                id: 1,
+                name: 'User',
+                description: 'Role standar untuk pengguna aplikasi. Dapat melihat dan menggunakan fitur dasar aplikasi.',
+                permissions: ['view', 'export', 'report'],
+                userCount: 198,
+                createdAt: '2025-01-15'
+            },
+            {
+                id: 2,
+                name: 'Admin',
+                description: 'Role admin dengan akses penuh ke semua fitur dan dapat mengelola pengguna lain.',
+                permissions: ['view', 'create', 'edit', 'delete', 'export', 'report'],
+                userCount: 5,
+                createdAt: '2025-01-01'
+            }
+        ];
+
+        let currentEditId = null;
+        let deleteTargetId = null;
+
+        // Render roles
+        function renderRoles() {
+            const container = document.getElementById('rolesContainer');
+            container.innerHTML = roles.map(role => `
+                <div class="role-card-hover bg-white border border-gray-200 rounded-lg p-6">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-900">${role.name}</h3>
+                                <p class="text-sm text-gray-500">${role.userCount} pengguna</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-1">
+                            <button onclick="openEditModal(${role.id})" class="p-2 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                </svg>
+                            </button>
+                            <button onclick="openDeleteModal(${role.id})" class="p-2 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-4">${role.description}</p>
+                    <div class="mb-4 pb-4 border-t border-gray-200">
+                        <p class="text-xs font-semibold text-gray-600 uppercase mb-2">Izin Akses:</p>
+                        <div class="flex flex-wrap gap-1">
+                            ${role.permissions.map(perm => {
+                                const permLabels = {
+                                    'view': 'Melihat',
+                                    'create': 'Membuat',
+                                    'edit': 'Mengedit',
+                                    'delete': 'Menghapus',
+                                    'export': 'Ekspor',
+                                    'report': 'Laporan'
+                                };
+                                return `<span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-blue-100 text-blue-800">${permLabels[perm]}</span>`;
+                            }).join('')}
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-400">Dibuat: ${new Date(role.createdAt).toLocaleDateString('id-ID')}</p>
+                </div>
+            `).join('');
+        }
+
+        // Open add modal
+        function openAddModal() {
+            currentEditId = null;
+            document.getElementById('modalTitle').textContent = 'Tambah Role Baru';
+            document.getElementById('roleForm').reset();
+            document.getElementById('permView').checked = true;
+            document.getElementById('permCreate').checked = false;
+            document.getElementById('permEdit').checked = false;
+            document.getElementById('permDelete').checked = false;
+            document.getElementById('permExport').checked = false;
+            document.getElementById('permReport').checked = false;
+            document.getElementById('roleModal').classList.remove('hidden');
+        }
+
+        // Open edit modal
+        function openEditModal(id) {
+            currentEditId = id;
+            const role = roles.find(r => r.id === id);
+            if (!role) return;
+
+            document.getElementById('modalTitle').textContent = `Edit Role - ${role.name}`;
+            document.getElementById('roleName').value = role.name;
+            document.getElementById('roleDescription').value = role.description;
+
+            // Set permissions
+            document.getElementById('permView').checked = role.permissions.includes('view');
+            document.getElementById('permCreate').checked = role.permissions.includes('create');
+            document.getElementById('permEdit').checked = role.permissions.includes('edit');
+            document.getElementById('permDelete').checked = role.permissions.includes('delete');
+            document.getElementById('permExport').checked = role.permissions.includes('export');
+            document.getElementById('permReport').checked = role.permissions.includes('report');
+
+            document.getElementById('roleModal').classList.remove('hidden');
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('roleModal').classList.add('hidden');
+            currentEditId = null;
+        }
+
+        // Handle form submit
+        function handleFormSubmit(event) {
+            event.preventDefault();
+
+            const permissions = ['view']; // View is always enabled
+            if (document.getElementById('permCreate').checked) permissions.push('create');
+            if (document.getElementById('permEdit').checked) permissions.push('edit');
+            if (document.getElementById('permDelete').checked) permissions.push('delete');
+            if (document.getElementById('permExport').checked) permissions.push('export');
+            if (document.getElementById('permReport').checked) permissions.push('report');
+
+            if (currentEditId) {
+                // Edit existing role
+                const role = roles.find(r => r.id === currentEditId);
+                if (role) {
+                    role.name = document.getElementById('roleName').value;
+                    role.description = document.getElementById('roleDescription').value;
+                    role.permissions = permissions;
+                    showToast('Role berhasil diperbarui');
+                }
+            } else {
+                // Add new role
+                const newRole = {
+                    id: Math.max(...roles.map(r => r.id), 0) + 1,
+                    name: document.getElementById('roleName').value,
+                    description: document.getElementById('roleDescription').value,
+                    permissions: permissions,
+                    userCount: 0,
+                    createdAt: new Date().toISOString().split('T')[0]
+                };
+                roles.push(newRole);
+                showToast('Role baru berhasil ditambahkan');
+            }
+
+            closeModal();
+            renderRoles();
+        }
+
+        // Open delete confirmation
+        function openDeleteModal(id) {
+            deleteTargetId = id;
+            const role = roles.find(r => r.id === id);
+            document.getElementById('deleteMessage').textContent = `Apakah Anda yakin ingin menghapus role "${role.name}"?`;
+            document.getElementById('deleteConfirmModal').classList.remove('hidden');
+        }
+
+        // Close delete modal
+        function closeDeleteModal() {
+            document.getElementById('deleteConfirmModal').classList.add('hidden');
+            deleteTargetId = null;
+        }
+
+        // Confirm delete
+        function confirmDelete() {
+            roles = roles.filter(r => r.id !== deleteTargetId);
+            closeDeleteModal();
+            showToast('Role berhasil dihapus');
+            renderRoles();
+        }
+
+        // Show toast notification
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.style.opacity = '1';
+            setTimeout(() => {
+                toast.style.opacity = '0';
+            }, 3000);
+        }
+
+        // Sidebar toggle for mobile
+        document.getElementById('sidebarToggle').addEventListener('click', () => {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('-translate-x-full');
+        });
+
+        // Initial render
+        renderRoles();
+    </script>
+</body>
+</html>
