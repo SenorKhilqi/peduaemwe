@@ -164,14 +164,17 @@
             </div>
 
             <!-- TAB NAVIGATION -->
-            <div class="flex border-b border-gray-200 mb-8 bg-white rounded-t-lg">
-                <button class="px-6 py-4 font-semibold text-blue-600 tab-active hover:bg-blue-50 transition" id="tab-labarugi">
+            <div class="flex border-b border-gray-200 mb-8 bg-white rounded-t-lg overflow-x-auto">
+                <button class="px-6 py-4 font-semibold text-blue-600 tab-active hover:bg-blue-50 transition whitespace-nowrap" id="tab-labarugi">
                     Laporan Laba Rugi
                 </button>
-                <button class="px-6 py-4 font-semibold text-gray-600 hover:bg-gray-50 transition" id="tab-neraca">
+                <button class="px-6 py-4 font-semibold text-gray-600 hover:bg-gray-50 transition whitespace-nowrap" id="tab-neraca">
                     Neraca
                 </button>
-                <button class="px-6 py-4 font-semibold text-gray-600 hover:bg-gray-50 transition" id="tab-cash-flow">
+                <button class="px-6 py-4 font-semibold text-gray-600 hover:bg-gray-50 transition whitespace-nowrap" id="tab-hpp">
+                    Harga Pokok Penjualan
+                </button>
+                <button class="px-6 py-4 font-semibold text-gray-600 hover:bg-gray-50 transition whitespace-nowrap" id="tab-cash-flow">
                     Arus Kas
                 </button>
             </div>
@@ -404,6 +407,195 @@
                 </div>
             </div>
 
+            <!-- HARGA POKOK PENJUALAN (HPP) TAB (Hidden by default) -->
+            <div class="tab-content hidden bg-white rounded-b-lg shadow-md p-8 mb-8" id="content-hpp">
+                <div class="mb-8">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">PT. MAJU JAYA</h3>
+                    <p class="text-gray-600">Laporan Harga Pokok Penjualan (HPP) Periode: Februari 2024</p>
+                </div>
+
+                <!-- HPP Table -->
+                <table class="report-table">
+                    <tbody>
+                        <!-- PERSEDIAAN AWAL -->
+                        <tr class="report-header">
+                            <td class="px-4 py-3 font-bold text-gray-900">PERSEDIAAN AWAL BAHAN BAKU</td>
+                            <td class="px-4 py-3 text-right"></td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="px-4 py-3 text-gray-700">Persediaan Awal 1 Februari 2024</td>
+                            <td class="px-4 py-3 text-right text-gray-900 font-semibold">Rp 18.5 jt</td>
+                        </tr>
+
+                        <!-- PEMBELIAN BAHAN BAKU -->
+                        <tr class="report-header mt-6">
+                            <td class="px-4 py-3 font-bold text-gray-900">PEMBELIAN BAHAN BAKU</td>
+                            <td class="px-4 py-3 text-right"></td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="px-4 py-3 text-gray-700">Pembelian Bahan Baku</td>
+                            <td class="px-4 py-3 text-right text-gray-900">Rp 42.0 jt</td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="px-4 py-3 text-gray-700">Potongan Pembelian</td>
+                            <td class="px-4 py-3 text-right text-red-600">- Rp 1.5 jt</td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="px-4 py-3 text-gray-700">Retur Pembelian</td>
+                            <td class="px-4 py-3 text-right text-red-600">- Rp 0.8 jt</td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="px-4 py-3 text-gray-700">Biaya Pengangkutan Pembelian</td>
+                            <td class="px-4 py-3 text-right text-gray-900">Rp 2.2 jt</td>
+                        </tr>
+                        <tr class="bg-gray-50 border-b font-bold">
+                            <td class="px-4 py-3 text-gray-900">Total Pembelian Bersih</td>
+                            <td class="px-4 py-3 text-right text-gray-900">Rp 41.9 jt</td>
+                        </tr>
+
+                        <!-- BAHAN BAKU TERSEDIA -->
+                        <tr class="bg-blue-50 border-b font-bold">
+                            <td class="px-4 py-3 text-gray-900">BAHAN BAKU TERSEDIA UNTUK PRODUKSI</td>
+                            <td class="px-4 py-3 text-right text-blue-600">Rp 60.4 jt</td>
+                        </tr>
+
+                        <!-- PERSEDIAAN AKHIR BAHAN BAKU -->
+                        <tr class="border-b">
+                            <td class="px-4 py-3 text-gray-700">Persediaan Akhir Bahan Baku (29 Feb 2024)</td>
+                            <td class="px-4 py-3 text-right text-red-600">- Rp 16.8 jt</td>
+                        </tr>
+                        <tr class="bg-gray-50 border-b font-bold">
+                            <td class="px-4 py-3 text-gray-900">BAHAN BAKU YANG DIPAKAI</td>
+                            <td class="px-4 py-3 text-right text-gray-900">Rp 43.6 jt</td>
+                        </tr>
+
+                        <!-- BIAYA TENAGA KERJA LANGSUNG -->
+                        <tr class="report-header mt-6">
+                            <td class="px-4 py-3 font-bold text-gray-900">BIAYA TENAGA KERJA LANGSUNG</td>
+                            <td class="px-4 py-3 text-right"></td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="px-4 py-3 text-gray-700">Gaji Tenaga Kerja Produksi</td>
+                            <td class="px-4 py-3 text-right text-gray-900">Rp 8.5 jt</td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="px-4 py-3 text-gray-700">Tunjangan & Bonus Produksi</td>
+                            <td class="px-4 py-3 text-right text-gray-900">Rp 1.2 jt</td>
+                        </tr>
+                        <tr class="bg-gray-50 border-b font-bold">
+                            <td class="px-4 py-3 text-gray-900">Total Biaya Tenaga Kerja Langsung</td>
+                            <td class="px-4 py-3 text-right text-gray-900">Rp 9.7 jt</td>
+                        </tr>
+
+                        <!-- BIAYA OVERHEAD PABRIK -->
+                        <tr class="report-header mt-6">
+                            <td class="px-4 py-3 font-bold text-gray-900">BIAYA OVERHEAD PABRIK</td>
+                            <td class="px-4 py-3 text-right"></td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="px-4 py-3 text-gray-700">&nbsp;&nbsp;Listrik & Air Pabrik</td>
+                            <td class="px-4 py-3 text-right text-gray-900">Rp 1.5 jt</td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="px-4 py-3 text-gray-700">&nbsp;&nbsp;Penyusutan Mesin</td>
+                            <td class="px-4 py-3 text-right text-gray-900">Rp 1.2 jt</td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="px-4 py-3 text-gray-700">&nbsp;&nbsp;Pemeliharaan & Reparasi Mesin</td>
+                            <td class="px-4 py-3 text-right text-gray-900">Rp 0.9 jt</td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="px-4 py-3 text-gray-700">&nbsp;&nbsp;Biaya Pabrik Lainnya</td>
+                            <td class="px-4 py-3 text-right text-gray-900">Rp 0.6 jt</td>
+                        </tr>
+                        <tr class="bg-gray-50 border-b font-bold">
+                            <td class="px-4 py-3 text-gray-900">Total Biaya Overhead Pabrik</td>
+                            <td class="px-4 py-3 text-right text-gray-900">Rp 4.2 jt</td>
+                        </tr>
+
+                        <!-- TOTAL BIAYA PRODUKSI -->
+                        <tr class="bg-purple-50 border-b font-bold text-lg">
+                            <td class="px-4 py-4 text-gray-900">TOTAL BIAYA PRODUKSI</td>
+                            <td class="px-4 py-4 text-right text-purple-600">Rp 57.5 jt</td>
+                        </tr>
+
+                        <!-- PERSEDIAAN PRODUK DALAM PROSES -->
+                        <tr class="report-header mt-6">
+                            <td class="px-4 py-3 font-bold text-gray-900">PERSEDIAAN PRODUK DALAM PROSES</td>
+                            <td class="px-4 py-3 text-right"></td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="px-4 py-3 text-gray-700">Persediaan Awal Produk Dalam Proses</td>
+                            <td class="px-4 py-3 text-right text-gray-900">Rp 5.2 jt</td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="px-4 py-3 text-gray-700">Persediaan Akhir Produk Dalam Proses</td>
+                            <td class="px-4 py-3 text-right text-red-600">- Rp 3.8 jt</td>
+                        </tr>
+                        <tr class="bg-gray-50 border-b font-bold">
+                            <td class="px-4 py-3 text-gray-900">Produk Dalam Proses Bersih</td>
+                            <td class="px-4 py-3 text-right text-gray-900">Rp 1.4 jt</td>
+                        </tr>
+
+                        <!-- BIAYA PRODUK JADI -->
+                        <tr class="bg-indigo-50 border-b font-bold">
+                            <td class="px-4 py-3 text-gray-900">BIAYA PRODUK JADI SIAP DIJUAL</td>
+                            <td class="px-4 py-3 text-right text-indigo-600">Rp 58.9 jt</td>
+                        </tr>
+
+                        <!-- PERSEDIAAN PRODUK JADI -->
+                        <tr class="report-header mt-6">
+                            <td class="px-4 py-3 font-bold text-gray-900">PERSEDIAAN PRODUK JADI</td>
+                            <td class="px-4 py-3 text-right"></td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="px-4 py-3 text-gray-700">Persediaan Awal Produk Jadi</td>
+                            <td class="px-4 py-3 text-right text-gray-900">Rp 12.0 jt</td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="px-4 py-3 text-gray-700">Persediaan Akhir Produk Jadi (29 Feb 2024)</td>
+                            <td class="px-4 py-3 text-right text-red-600">- Rp 9.2 jt</td>
+                        </tr>
+
+                        <!-- HARGA POKOK PENJUALAN -->
+                        <tr class="bg-green-50 font-bold text-xl border-t-2 border-green-300">
+                            <td class="px-4 py-4 text-gray-900">HARGA POKOK PENJUALAN (HPP)</td>
+                            <td class="px-4 py-4 text-right text-green-600">Rp 61.7 jt</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- Summary Cards -->
+                <div class="grid md:grid-cols-4 gap-4 mt-8">
+                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                        <p class="text-gray-600 text-sm font-medium">Bahan Baku Dipakai</p>
+                        <p class="text-2xl font-bold text-blue-600 mt-2">Rp 43.6 jt</p>
+                    </div>
+                    <div class="bg-purple-50 border border-purple-200 rounded-lg p-4">
+                        <p class="text-gray-600 text-sm font-medium">Biaya Tenaga Kerja</p>
+                        <p class="text-2xl font-bold text-purple-600 mt-2">Rp 9.7 jt</p>
+                    </div>
+                    <div class="bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+                        <p class="text-gray-600 text-sm font-medium">Overhead Pabrik</p>
+                        <p class="text-2xl font-bold text-indigo-600 mt-2">Rp 4.2 jt</p>
+                    </div>
+                    <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                        <p class="text-gray-600 text-sm font-medium">Harga Pokok Penjualan</p>
+                        <p class="text-2xl font-bold text-green-600 mt-2">Rp 61.7 jt</p>
+                    </div>
+                </div>
+
+                <!-- Method Note -->
+                <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mt-8">
+                    <p class="text-sm text-blue-800"><strong>Metode Perhitungan:</strong> HPP dihitung menggunakan metode absorption costing yang mengalokasikan semua biaya produksi (bahan baku, tenaga kerja langsung, dan overhead pabrik) ke produk yang dihasilkan.</p>
+                </div>
+
+                <!-- Note -->
+                <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mt-4">
+                    <p class="text-sm text-yellow-800"><strong>Catatan:</strong> Laporan HPP ini merupakan draft dan belum diaudit. Untuk keperluan formal, silakan konsultasikan dengan akuntan profesional.</p>
+                </div>
+            </div>
+
             <!-- ARUS KAS TAB (Hidden by default) -->
             <div class="tab-content hidden bg-white rounded-b-lg shadow-md p-8 mb-8" id="content-cash-flow">
                 <div class="mb-8">
@@ -505,6 +697,10 @@
             switchTab('neraca');
         });
 
+        document.getElementById('tab-hpp').addEventListener('click', function() {
+            switchTab('hpp');
+        });
+
         document.getElementById('tab-cash-flow').addEventListener('click', function() {
             switchTab('cash-flow');
         });
@@ -513,11 +709,13 @@
             // Hide all tabs
             document.getElementById('content-labarugi').classList.add('hidden');
             document.getElementById('content-neraca').classList.add('hidden');
+            document.getElementById('content-hpp').classList.add('hidden');
             document.getElementById('content-cash-flow').classList.add('hidden');
 
             // Remove active class from all tabs
             document.getElementById('tab-labarugi').classList.remove('tab-active');
             document.getElementById('tab-neraca').classList.remove('tab-active');
+            document.getElementById('tab-hpp').classList.remove('tab-active');
             document.getElementById('tab-cash-flow').classList.remove('tab-active');
 
             // Show selected tab
