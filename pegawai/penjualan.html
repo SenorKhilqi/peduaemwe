@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input Penjualan - Web Ledger SAK EMKM</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .sidebar-active {
+            background-color: rgba(34, 197, 94, 0.1);
+            border-left: 4px solid #22C55E;
+        }
+        .form-input {
+            @apply w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400;
+        }
+        .btn-primary {
+            @apply bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg font-semibold transition;
+        }
+        .btn-secondary {
+            @apply bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded-lg font-semibold transition;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- HEADER -->
+    <header class="bg-white shadow-md sticky top-0 z-40">
+        <div class="flex items-center justify-between px-6 py-4">
+            <div class="flex items-center gap-3">
+                <button id="sidebarToggle" class="md:hidden p-2 hover:bg-gray-100 rounded-lg">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+                <h1 class="text-2xl font-bold text-gray-900">Input Penjualan</h1>
+            </div>
+            <div class="flex items-center gap-3 border-l pl-4">
+                <div class="text-right hidden sm:block">
+                    <p class="text-sm font-semibold text-gray-900">PT. Maju Jaya</p>
+                    <p class="text-xs text-gray-500">Kasir</p>
+                </div>
+                <div class="w-10 h-10 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center text-white font-bold">
+                    KS
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="flex h-screen overflow-hidden">
+        <!-- SIDEBAR NAVIGATION -->
+        <aside id="sidebar" class="w-64 bg-white shadow-lg overflow-y-auto transition-all duration-300 -translate-x-full md:translate-x-0 absolute md:relative h-full md:h-auto z-30 md:z-0">
+            <nav class="px-4 py-6">
+                <div class="flex items-center gap-2 mb-8 px-2">
+                    <img src="../gambar/logo.png" alt="Web Ledger Logo" class="w-8 h-8 object-contain">
+                    <span class="font-bold text-lg text-gray-900">Web Ledger</span>
+                </div>
+
+                <!-- Menu Items -->
+                <div class="space-y-2">
+                    <a href="dashboard.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-green-600 transition">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
+                        </svg>
+                        <span class="font-medium">Dashboard</span>
+                    </a>
+
+                    <a href="penjualan.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-green-600 sidebar-active hover:bg-gray-100 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <span class="font-medium">Input Penjualan</span>
+                    </a>
+
+                    <a href="laporan.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-green-600 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                        <span class="font-medium">Laporan Kasir</span>
+                    </a>
+
+                    <a href="pengaturan.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-green-600 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                        <span class="font-medium">Pengaturan</span>
+                    </a>
+                </div>
+
+                <!-- Logout -->
+                <div class="mt-8 pt-6 border-t">
+                    <button onclick="logout()" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-600 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                        </svg>
+                        <span class="font-medium">Logout</span>
+                    </button>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="flex-1 overflow-auto">
+            <div class="p-6 md:p-8">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Form Input Penjualan -->
+                    <div class="lg:col-span-2">
+                        <div class="bg-white rounded-lg shadow-md p-6">
+                            <h3 class="text-lg font-bold text-gray-900 mb-6">Form Input Penjualan</h3>
+
+                            <form id="penjualanForm">
+                                <!-- Tanggal & Nomor Invoice -->
+                                <div class="grid grid-cols-2 gap-4 mb-6">
+                                    <div>
+                                        <label class="block text-sm font-semibold text-gray-700 mb-2">Tanggal Transaksi</label>
+                                        <input type="date" id="tanggal" class="form-input" required>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-semibold text-gray-700 mb-2">No. Invoice</label>
+                                        <input type="text" id="noInvoice" class="form-input" placeholder="Auto-generated" disabled>
+                                    </div>
+                                </div>
+
+                                <!-- Deskripsi Produk -->
+                                <div class="mb-6">
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Deskripsi Produk/Layanan</label>
+                                    <input type="text" id="deskripsi" class="form-input" placeholder="Contoh: Penjualan Barang Dagangan" required>
+                                </div>
+
+                                <!-- Kategori -->
+                                <div class="mb-6">
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Kategori</label>
+                                    <select id="kategori" class="form-input" required>
+                                        <option value="">-- Pilih Kategori --</option>
+                                        <option value="barang-dagangan">Barang Dagangan</option>
+                                        <option value="jasa-produksi">Jasa Produksi</option>
+                                        <option value="jasa-distribusi">Jasa Distribusi</option>
+                                        <option value="lainnya">Lainnya</option>
+                                    </select>
+                                </div>
+
+                                <!-- Jumlah & Harga -->
+                                <div class="grid grid-cols-2 gap-4 mb-6">
+                                    <div>
+                                        <label class="block text-sm font-semibold text-gray-700 mb-2">Jumlah</label>
+                                        <input type="number" id="jumlah" class="form-input" value="1" min="1" required>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-semibold text-gray-700 mb-2">Harga Satuan</label>
+                                        <input type="number" id="hargaSatuan" class="form-input" placeholder="0" step="1000" required>
+                                    </div>
+                                </div>
+
+                                <!-- Total Penjualan -->
+                                <div class="mb-6 p-4 bg-green-50 rounded-lg border border-green-200">
+                                    <div class="flex justify-between items-center">
+                                        <span class="font-semibold text-gray-700">Total Penjualan</span>
+                                        <span class="text-2xl font-bold text-green-600" id="totalPenjualan">Rp 0</span>
+                                    </div>
+                                </div>
+
+                                <!-- Metode Pembayaran -->
+                                <div class="mb-6">
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Metode Pembayaran</label>
+                                    <div class="space-y-2">
+                                        <label class="flex items-center">
+                                            <input type="radio" name="metodePembayaran" value="tunai" class="mr-2" checked>
+                                            <span class="text-gray-700">Tunai</span>
+                                        </label>
+                                        <label class="flex items-center">
+                                            <input type="radio" name="metodePembayaran" value="transfer" class="mr-2">
+                                            <span class="text-gray-700">Transfer Bank</span>
+                                        </label>
+                                        <label class="flex items-center">
+                                            <input type="radio" name="metodePembayaran" value="kartu" class="mr-2">
+                                            <span class="text-gray-700">Kartu Kredit</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- Catatan -->
+                                <div class="mb-6">
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Catatan (Opsional)</label>
+                                    <textarea id="catatan" class="form-input" rows="3" placeholder="Tambahan informasi jika ada..."></textarea>
+                                </div>
+
+                                <!-- Buttons -->
+                                <div class="flex gap-4">
+                                    <button type="submit" class="btn-primary flex-1">
+                                        <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                                        </svg>
+                                        Simpan Penjualan
+                                    </button>
+                                    <button type="reset" class="btn-secondary flex-1">
+                                        Reset Form
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Summary Card -->
+                    <div>
+                        <div class="bg-white rounded-lg shadow-md p-6 sticky top-20">
+                            <h4 class="font-bold text-gray-900 mb-4">Ringkasan Transaksi</h4>
+
+                            <div class="space-y-4 mb-6 p-4 bg-gray-50 rounded-lg">
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-600">Jumlah Barang:</span>
+                                    <span class="font-semibold" id="summaryJumlah">0</span>
+                                </div>
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-600">Harga Satuan:</span>
+                                    <span class="font-semibold" id="summaryHarga">Rp 0</span>
+                                </div>
+                                <hr>
+                                <div class="flex justify-between">
+                                    <span class="font-semibold text-gray-900">Total:</span>
+                                    <span class="text-xl font-bold text-green-600" id="summaryTotal">Rp 0</span>
+                                </div>
+                            </div>
+
+                            <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 text-sm text-blue-800">
+                                <p class="font-semibold mb-2">Catatan Penting:</p>
+                                <ul class="list-disc pl-4 space-y-1 text-xs">
+                                    <li>Pastikan data sudah benar sebelum menyimpan</li>
+                                    <li>Setiap transaksi akan di-record otomatis</li>
+                                    <li>Laporan dapat dilihat di halaman Laporan Kasir</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const sidebar = document.getElementById('sidebar');
+
+        sidebarToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('-translate-x-full');
+        });
+
+        // Set today's date
+        document.getElementById('tanggal').valueAsDate = new Date();
+
+        // Generate invoice number
+        function generateInvoiceNumber() {
+            const now = new Date();
+            const dateStr = now.toISOString().slice(0, 10).replace(/-/g, '');
+            const randomNum = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+            return `INV-${dateStr}-${randomNum}`;
+        }
+        document.getElementById('noInvoice').value = generateInvoiceNumber();
+
+        // Calculate totals
+        function calculateTotal() {
+            const jumlah = parseInt(document.getElementById('jumlah').value) || 0;
+            const hargaSatuan = parseInt(document.getElementById('hargaSatuan').value) || 0;
+            const total = jumlah * hargaSatuan;
+
+            const formatter = new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR',
+                minimumFractionDigits: 0
+            });
+
+            document.getElementById('totalPenjualan').textContent = formatter.format(total);
+            document.getElementById('summaryJumlah').textContent = jumlah;
+            document.getElementById('summaryHarga').textContent = formatter.format(hargaSatuan);
+            document.getElementById('summaryTotal').textContent = formatter.format(total);
+        }
+
+        document.getElementById('jumlah').addEventListener('change', calculateTotal);
+        document.getElementById('hargaSatuan').addEventListener('change', calculateTotal);
+        document.getElementById('hargaSatuan').addEventListener('input', calculateTotal);
+
+        // Form submission
+        document.getElementById('penjualanForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const formData = {
+                tanggal: document.getElementById('tanggal').value,
+                noInvoice: document.getElementById('noInvoice').value,
+                deskripsi: document.getElementById('deskripsi').value,
+                kategori: document.getElementById('kategori').value,
+                jumlah: document.getElementById('jumlah').value,
+                hargaSatuan: document.getElementById('hargaSatuan').value,
+                total: parseInt(document.getElementById('jumlah').value) * parseInt(document.getElementById('hargaSatuan').value),
+                metodePembayaran: document.querySelector('input[name="metodePembayaran"]:checked').value,
+                catatan: document.getElementById('catatan').value
+            };
+
+            // Save to localStorage
+            let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+            transactions.push(formData);
+            localStorage.setItem('transactions', JSON.stringify(transactions));
+
+            // Show success message
+            alert('Transaksi berhasil disimpan!\nNo. Invoice: ' + formData.noInvoice);
+            
+            // Reset form
+            this.reset();
+            document.getElementById('tanggal').valueAsDate = new Date();
+            document.getElementById('noInvoice').value = generateInvoiceNumber();
+            calculateTotal();
+        });
+
+        function logout() {
+            if (confirm('Apakah Anda yakin ingin logout?')) {
+                window.location.href = '../login.html';
+            }
+        }
+    </script>
+</body>
+</html>
